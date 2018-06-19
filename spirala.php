@@ -1,8 +1,8 @@
 <?php
 
 
-$redova=5;
-$kolona=5;
+$redova=7;
+$kolona=7;
 
 
 
@@ -17,13 +17,66 @@ for($i=0;$i<$redova;$i++){
 
 //čarolija - napuniti
 $brojac=1;
-for($i=$kolona-1; $i>=0;$i--){
-    $podaci[$redova-1][$i]=$brojac++;
+
+
+// prvi krug
+$a=1;  // brojač krugova 
+while ($brojac<=$redova*$kolona){
+   // while ($a<$redova/2 || $a<$kolona/2){
+
+for($i=$kolona-$a; $i>=($a-1);$i--){              //1 potez
+    $podaci[$redova-$a][$i]=$brojac++;
 }
 
-for($i=$redova-2; $i>=0;$i--){
-    $podaci[$i][0]=$brojac++;
+for($i=$redova-($a+1); $i>=($a-1);$i--){              // 2 potez
+    $podaci[$i][$a-1]=$brojac++;
 }
+
+for ($i=$a;$i<$kolona-($a-1);$i++){                 //3 potez
+    $podaci[$a-1][$i]=$brojac++;
+
+}
+
+for($i=$a;$i<$redova-$a;$i++){                //4 potez
+    $podaci[$i][$kolona-$a]=$brojac++;
+
+}
+$a++;
+}
+
+/*
+
+//drugi krug
+for ($i=$kolona-2;$i>=1;$i--){              //5 potez
+    $podaci[$redova-2][$i]=$brojac++;
+}
+
+for($i=$redova-3; $i>=1;$i--){              // 6 potez
+    $podaci[$i][1]=$brojac++;
+}
+
+
+for ($i=2;$i<$kolona-1;$i++){               //7 potez
+    $podaci[1][$i]=$brojac++;
+
+}
+
+for($i=2;$i<$redova-2;$i++){                //8 potez
+    $podaci[$i][$kolona-2]=$brojac++;
+
+}
+// treći krug
+for ($i=$kolona-3;$i>=2;$i--){              //9 potez
+    $podaci[$redova-3][$i]=$brojac++;
+}
+
+
+
+*/
+
+
+
+
 
 
 
@@ -38,6 +91,8 @@ for($i=0;$i<$redova;$i++){
 echo "</table>";
 
 
+
+echo "<hr>". " brojač je trenutno došao do ".$brojac;
 
 
 

@@ -5,8 +5,8 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
+                <a href="https://www.edunova.hr/">
+                learned in
                 </a>
               </li>
             </ul>

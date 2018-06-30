@@ -1,11 +1,11 @@
-<div class="sidebar" data-color="azure" data-background-color="purple">
+<div class="sidebar" data-color="azure" data-background-color="orange">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
         Tip 2: you can also add an image using data-image tag
     -->
   <div class="logo">
-    <a href="#" class="simple-text logo-normal"> <!--UPISATI UMJESTO # LINK-->
+    <a href="index.php" class="simple-text logo-normal"> <!--UPISATI UMJESTO # LINK-->
       Moj logo ovdje
     </a>
   </div>

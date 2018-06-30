@@ -23,6 +23,7 @@
                   <i class="material-icons">fingerprint</i> Prijavi se
                 </a>
               </li>
+              
               <!-- your navbar here -->
             </ul>
           </div>

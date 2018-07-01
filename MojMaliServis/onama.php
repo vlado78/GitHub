@@ -10,23 +10,7 @@
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">O nama</a>
-          </div>
-          
-          <div class="collapse navbar-collapse justify-content-end">
-            <ul class="navbar-nav">
-             
-              <li class="nav-item">
-                <a class="nav-link" href="#pablo">
-                  <i class="material-icons">fingerprint</i> Prijavi se
-                </a>
-              </li>
-              <!-- your navbar here -->
-            </ul>
-          </div>
-        </div>
+      <?php include_once "predlozak/navbar.php" ?>
       </nav>
       <!-- End Navbar -->
       <div class="content">

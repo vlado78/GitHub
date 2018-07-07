@@ -1,3 +1,5 @@
+
+
 <div class="sidebar" data-color="azure" data-background-color="white">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -41,7 +43,11 @@
         </a>
       </li>
 
-      <?php if(isset($_SESSION["o"])): ?>
+      <?php 
+      
+      //session_start();
+     
+      if(!isset($_SESSION["o"])): ?>
 
         <li class="nav-item active  ">
           <a class="nav-link" href="prijava.php">

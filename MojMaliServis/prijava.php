@@ -23,11 +23,11 @@
                                 <h1>Prijava</h1>
                                 <div class="floated-label-wrapper">
                                   <label for="korisnik">Korisnik</label>
-                                  <input autocomplete="off" type="text" id="korisnik" name="korisnik" placeholder="tjakopec">
+                                  <input autocomplete="off" type="text" id="korisnik" name="korisnik" placeholder="korisnik">
                                 </div>
                                 <div class="floated-label-wrapper">
                                   <label for="lozinka">Lozinka</label>
-                                  <input autocomplete="off" type="password" id="lozinka" name="lozinka" placeholder="t">
+                                  <input autocomplete="off" type="password" id="lozinka" name="lozinka" placeholder="lozinka">
                                 </div>
                                 <input class="button expanded" type="submit" value="Potvrdi">
                               </form>

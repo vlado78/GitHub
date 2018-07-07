@@ -1,3 +1,10 @@
+
+<?php
+session_start();
+if(!isset($_SESSION["o"])){
+ header ("odjava.php");
+}
+?>
 <!doctype html>
 <html lang="en">
 

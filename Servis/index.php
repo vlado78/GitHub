@@ -12,13 +12,15 @@
 
 ovo je naslovnica
 
-
+ <?php include_once "predlozak/podnozje.php" ?>
   </div>
   
     
     
 
-   
-    <?php include_once "predlozak/skripte.php" ?>
+   <?php include_once "predlozak/podnozje.php" ?>
+  <?php include_once "predlozak/skripte.php" ?>
   </body>
+  
+
 </html>

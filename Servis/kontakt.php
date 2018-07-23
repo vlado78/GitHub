@@ -11,6 +11,9 @@
      <?php include_once "predlozak/navbar.php" ?>
 
  Ovo je stranica za kontakt
+ 
+
+<?php include_once "predlozak/podnozje.php" ?>
   </div>
   
    

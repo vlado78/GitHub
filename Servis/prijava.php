@@ -32,7 +32,7 @@
    
 
 
-
+<?php include_once "predlozak/podnozje.php" ?>
    ovo je stranica prijave
   </div>
   

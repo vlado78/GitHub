@@ -11,6 +11,7 @@
      <?php include_once "predlozak/navbar.php" ?>
 
  Ovo je stranica o nama
+ <?php include_once "predlozak/podnozje.php" ?>
   </div>
   
    

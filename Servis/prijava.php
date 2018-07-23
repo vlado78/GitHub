@@ -10,7 +10,30 @@
      <?php include_once "predlozak/zaglavlje.php" ?>
      <?php include_once "predlozak/navbar.php" ?>
 
-   ovo je stranica prijavi
+    
+     <form class="callout text-center" action="autoriziraj.php" method="post">
+  <h2>Prijavite se</h2>
+  <div class="floated-label-wrapper">
+    <label for="full-name">Korisničko ime</label>
+    <input autocomplete="off" type="text" id="korisnik" name="korisnik" placeholder="Ovdje upišite svoje korisničko ime">
+  </div>
+
+  <div class="floated-label-wrapper">
+    <label for="pass">Lozinka</label>
+    <input autocomplete="off" type="password" id="lozinka" name="lozinka" placeholder="Ovdje upišite svoju lozinku">
+  </div>
+  <input class="button expanded" type="submit" value="Prijavi se">
+</form>
+
+
+
+
+     
+   
+
+
+
+   ovo je stranica prijave
   </div>
   
     

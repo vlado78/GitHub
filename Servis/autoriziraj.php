@@ -18,7 +18,7 @@ include_once "konfiguracija.php";
     ){
         //pusti dalje
         $_SESSION[$idAPP."o"]= $_POST["korisnik"];
-        header("location: index.php"); 
+        header("location: privatno/nadzornaPloca.php"); 
     }else{
         header("location: prijava.php"); 
     }

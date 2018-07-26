@@ -1,4 +1,4 @@
-<div class="grid-x grid-padding-x hide-for-small-only">
+<div class="grid-x grid-padding-x hide-for-small-only"<?php echo $bojaOkvira ?>>
     <div class="large-12 cell">
         <div class="callout">
             <div class="grid-x grid-padding-x">

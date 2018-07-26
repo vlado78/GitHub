@@ -10,7 +10,8 @@
      <?php include_once "predlozak/zaglavlje.php" ?>
      <?php include_once "predlozak/navbar.php" ?>
 
-    
+    <div class="grid-x grid-padding-x ">
+      <div class="large-4 cell text-center">
      <form class="callout text-center" action="autoriziraj.php" method="post">
   <h2>Prijavite se</h2>
   <div class="floated-label-wrapper">
@@ -23,6 +24,8 @@
     <input autocomplete="off" type="password" id="lozinka" name="lozinka" placeholder="Ovdje upišite svoju lozinku">
   </div>
   <input class="button expanded" type="submit" value="Prijavi se">
+  </div>
+    </div>
 </form>
 
 

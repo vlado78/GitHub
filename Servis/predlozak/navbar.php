@@ -1,6 +1,6 @@
 <nav class="top-bar topbar-responsive">
 
-      <div class="top-bar-title">
+      <div class="top-bar-title" >
         <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
           <button class="menu-icon" type="button" data-toggle></button>
         </span>
@@ -30,3 +30,30 @@
         </div>
       </div>
     </nav>
+    <br>
+    <?php if(isset( $_SESSION[$idAPP."o"])): ?>
+    <nav class="top-bar topbar-responsive">
+
+      <div class="top-bar-title">
+        <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
+          <button class="menu-icon" type="button" data-toggle></button>
+        </span>
+       
+      </div>
+
+      <div id="topbar-responsive" class="topbar-responsive-links">
+        <div class="top-bar-right">
+          <ul class="menu simple vertical medium-horizontal">
+            <li><a href="<?php echo $putanjaAPP; ?>privatno/nadzornaPloca.php">Nadzorna ploča</a></li>
+            <li><a href="<?php echo $putanjaAPP; ?>privatno/PDO.php">PDO</a></li>    
+            <li><a href="<?php echo $putanjaAPP; ?>privatno/eraDiagram.php">ERA diagram</a></li>  
+            <li><a href="<?php echo $putanjaAPP; ?>privatno/radionice/index.php">Radionice</a></li>             
+            </ul>
+        </div>
+      </div>
+    </nav>
+   
+
+    <?php endif?>
+
+  

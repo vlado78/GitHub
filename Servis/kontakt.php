@@ -10,8 +10,15 @@
      <?php include_once "predlozak/zaglavlje.php" ?>
      <?php include_once "predlozak/navbar.php" ?>
 
- Ovo je stranica za kontakt
- 
+    <div class="grid-x">
+        <div class="cell large-6">
+         mapa
+
+        </div>
+        <div class="cell large-6">
+        kontakt
+        </div>
+    </div>
 
 <?php include_once "predlozak/podnozje.php" ?>
   </div>

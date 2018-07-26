@@ -47,6 +47,7 @@
             <li><a href="<?php echo $putanjaAPP; ?>privatno/nadzornaPloca.php">Nadzorna ploča</a></li>
             <li><a href="<?php echo $putanjaAPP; ?>privatno/PDO.php">PDO</a></li>    
             <li><a href="<?php echo $putanjaAPP; ?>privatno/eraDiagram.php">ERA diagram</a></li>  
+            <li><a href="https://github.com/vlado78/GitHub/tree/master/Servis" target="_blank">GitHub</a></li>  
             <li><a href="<?php echo $putanjaAPP; ?>privatno/radionice/index.php">Radionice</a></li>             
             </ul>
         </div>

@@ -32,6 +32,7 @@ novi
             <label for="naziv">Naziv</label>
             <input autocomplete="off" type="text" id="naziv" name="naziv" placeholder="Ime radionice">
           </div>
+          
           <div class="floated-label-wrapper">
             <label for="trajanje">Datum_osnutka</label>
             <input autocomplete="off" type="date" id="trajanje" name="Datum osnutka" placeholder="Datum osnutka">

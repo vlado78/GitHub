@@ -17,7 +17,7 @@ if(!isset($_SESSION[$idAPP."o"])){
 ovo su radionice
 <br>
 
-<a href="novi.php" class="success button expanded">Dodaj novi smjer</a>
+<a href="novi.php" class="success button expanded">Dodaj novu radionicu</a>
   
 
 

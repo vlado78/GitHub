@@ -45,7 +45,6 @@ ovo su vlasnici
     <table>
       <thead>
         <tr>
-          <th>Šifra</th>
           <th>Ime</th>
           <th>Prezime</th>
           <th>Ulica i broj</th>
@@ -61,28 +60,23 @@ ovo su vlasnici
     <tbody>
     <?php foreach($rezultati as $red):?>
       <tr>
-      <td><?php echo $red->sifra; ?></td>
-      <td><?php echo $red->ime; ?></td>
-      <td><?php echo $red->prezime; ?></td>
-      <td><?php echo $red->ulica_i_broj; ?></td>
-      <td><?php echo $red->mjesto; ?></td>
-      <td><?php echo $red->broj_mobitela; ?></td>
-      <td><?php echo $red->email; ?></td>
-      <td><?php echo $red->datum_rodjenja; ?></td>
-      <td><?php echo $red->oib; ?></td>
-      <td><?php echo $red->napomena; ?></td>
-      <td>
-          <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
-          <i class="fas fa-edit fa-2x"></i> 
-          </a>
-          
-        
-          
-         
-          </td>
+        <td><?php echo $red->ime; ?></td>
+        <td><?php echo $red->prezime; ?></td>
+        <td><?php echo $red->ulica_i_broj; ?></td>
+        <td><?php echo $red->mjesto; ?></td>
+        <td><?php echo $red->broj_mobitela; ?></td>
+        <td><?php echo $red->email; ?></td>
+        <td><?php echo $red->datum_rodjenja; ?></td>
+        <td><?php echo $red->oib; ?></td>
+        <td><?php echo $red->napomena; ?></td>
+        <td>
+            <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
+            <i class="fas fa-edit fa-2x"></i> 
+            </a>  
+        </td>
       </tr>
       
-      </tr>
+      
     <?php endforeach;?>
     </tbody>
     </table>

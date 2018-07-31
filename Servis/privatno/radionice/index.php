@@ -60,9 +60,9 @@ ovo su radionice
             <i class="fas fa-edit fa-2x"></i> 
             </a>
             <?php if($red->flag_to_delete!=0): ?>
-				<a onclick="return confirm('Sigurno obrisati <?php echo $red->naziv ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
-				<i class="fas fa-trash fa-2x" style="color: red;"></i>
-				</a>
+				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->naziv ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
+				    <i class="fas fa-trash fa-2x" style="color: red;"></i>
+				    </a>
 			<?php endif;?>
           
             

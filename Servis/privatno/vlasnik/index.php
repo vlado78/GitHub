@@ -23,15 +23,18 @@ if(!isset($_SESSION[$idAPP."o"])){
 
  <?php
  
- $izraz = $veza->prepare("select * from vlasnik");
-
-
-
-
-
-
-
+ $izraz = $veza->prepare("
  
+ select 
+a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_rodjenja,a.oib,a.napomena,
+ count(b.sifra) as vozila
+ from vlasnik a left join vozilo b
+ on a.sifra=b.vlasnik 
+group by
+a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_rodjenja,a.oib,a.napomena
+ ");
+
+
  $izraz->execute();
  $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
  
@@ -72,10 +75,12 @@ if(!isset($_SESSION[$idAPP."o"])){
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
             </a> 
-            <?php ///if($red->flag_to_delete!=0): ?>
+            <?php if($red->vozila==0): ?>
 				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->naziv ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
 				    <i class="fas fa-trash fa-2x" style="color: red;"></i>
-				    </a> 
+            </a> 
+            <?php endif;?>
+           
         </td>
       </tr>
       

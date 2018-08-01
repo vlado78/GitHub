@@ -14,10 +14,12 @@ if(!isset($_SESSION[$idAPP."o"])){
      <?php include_once "../../predlozak/zaglavlje.php" ?>
      <?php include_once "../../predlozak/navbar.php" ?>
 
-ovo su radionice
+
 <br>
+<h3>Radionice</h3>
 
 <a href="novi.php" class="success button expanded">Dodaj novu radionicu</a>
+
   
 
 

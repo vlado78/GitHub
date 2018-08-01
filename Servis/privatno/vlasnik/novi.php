@@ -27,7 +27,7 @@ if(isset($_POST["dodaj"])){
    <?php include_once "../../predlozak/zaglavlje.php" ?>
     <?php include_once "../../predlozak/navbar.php" ?>
 
-   novi
+   <h3>Novi vlasnik</h3>
     <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
 
 
@@ -38,43 +38,45 @@ if(isset($_POST["dodaj"])){
       
       <div class="floated-label-wrapper">
         <label for="prezime">Prezime</label>
-        <input  autocomplete="off" id="prezime" name="prezime" placeholder="Prezime" >
+        <input  autocomplete="off" type="text" id="prezime" name="prezime" placeholder="Prezime" >
       </div>
 
       <div class="floated-label-wrapper">
         <label for="ulica_i_broj">Ulica i broj</label>
-        <input  autocomplete="off" id="ulica_i_broj" name="ulica_i_broj" placeholder="Ulica i broj" >
+        <input  autocomplete="off" type="text" id="ulica_i_broj" name="ulica_i_broj" placeholder="Ulica i broj" >
       </div>
 
       <div class="floated-label-wrapper">
         <label for="mjesto">Mjesto</label>
-        <input  autocomplete="off" id="mjesto" name="mjesto" placeholder="Mjesto" >
+        <input  autocomplete="off" type="text" id="mjesto" name="mjesto" placeholder="Mjesto" >
       </div>
 
       <div class="floated-label-wrapper">
         <label for="broj_mobitela">Broj mobitela</label>
-        <input  autocomplete="off" id="broj_mobitela" name="broj_mobitela" placeholder="Broj mobitela" >
+        <input  autocomplete="off" type="text" id="broj_mobitela" name="broj_mobitela" placeholder="Broj mobitela" >
       </div>
 
       <div class="floated-label-wrapper">
         <label for="email">Email</label>
-        <input  autocomplete="off" id="email" name="email" placeholder="Email" >
+        <input  autocomplete="off"  type="text" id="email" name="email" placeholder="Email" >
       </div>
 
       <div class="floated-label-wrapper">
         <label for="datum_rodjenja">Datum rođenja</label>
-        <input  autocomplete="off" id="datum_rodjenja" name="datum_rodjenja" placeholder="Datum rođenja" >
+        <input  autocomplete="off" type="date"id="datum_rodjenja" name="datum_rodjenja" placeholder="Datum rođenja" >
       </div>
 
       <div class="floated-label-wrapper">
         <label for="oib">Oib</label>
-        <input  autocomplete="off" id="oib" name="oib" placeholder="Oib" >
+        <input  autocomplete="off" type="text" id="oib" name="oib" placeholder="Oib" >
       </div>
 
       <div class="floated-label-wrapper">
         <label for="napomena">Napomena</label>
-        <input  autocomplete="off" id="napomena" name="napomena" placeholder="Napomena" >
+        <input  autocomplete="off" type="text" id="napomena" name="napomena" placeholder="Napomena" >
       </div>
+
+      
           
             
             

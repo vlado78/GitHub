@@ -1,4 +1,4 @@
-<nav class="top-bar topbar-responsive" id=1>
+<nav class="top-bar topbar-responsive" id="1">
 
   <div class="top-bar-title" >
     <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
@@ -31,7 +31,7 @@
 
 <br>
 <?php if(isset( $_SESSION[$idAPP."o"])): ?>
-  <nav class="top-bar topbar-responsive" id=2>
+  <nav class="top-bar topbar-responsive" id="2">
 
     <div class="top-bar-title">
       <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">

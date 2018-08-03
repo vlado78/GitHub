@@ -13,7 +13,7 @@ switch($_SERVER["HTTP_HOST"]){
     break;
     
     case "vladimir.byethost17.com":
-    $putanjaAPP="/Servis/";
+    $putanjaAPP="/../";
     $bojaIzbornika="";
     $veza = new PDO("mysql:host=sql101.byethost.com;dbname=b17_21947030_autoservis","b17_21947030","edunova2018");
     $veza->exec("set names utf8;");

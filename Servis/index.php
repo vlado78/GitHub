@@ -20,6 +20,7 @@ ovo je naslovnica
 
    <?php include_once "predlozak/podnozje.php" ?>
   <?php include_once "predlozak/skripte.php" ?>
+  
   </body>
   
 

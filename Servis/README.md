@@ -1,8 +1,7 @@
 # servis
-fffff
-Aplikacija mora imati javni i privatni dio
+Aplikacija ima privatni i javni dio
 Aplikacija mora imati metapodatke prema http://ogp.me/
-Aplikacija mora imati favicon-e kreirane pomoću http://www.favicon-generator.org/
+Aplikacija ima favicon
 Aplikacija mora biti prilagodljiva minimalno dvijema različitim širinama zalona (RWD) - sadržaj mora biti čitljiv, vidljiv, dobro organiziran on obje ili više različitih širina zaslona
 Javni dio mora imati početnu stranicu te kontakt stranicu s google maps kartom
 Autorizacija se izvršava koda

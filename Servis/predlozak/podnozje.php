@@ -1,3 +1,3 @@
 <hr />
-&copy; <?php echo date("Y") ?> Edunova   Created by I
+&copy; <?php echo date("Y") ?> and powerd by Edunova created by me, myself and I
 

@@ -3,6 +3,13 @@
 <html class="no-js" lang="en" dir="ltr">
   <head>
     <?php include_once "predlozak/head.php" ?>
+    <style>
+
+
+
+
+
+</style>
   </head>
   <body>
   <div class="grid-container">
@@ -22,7 +29,10 @@
 <P>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum sequi voluptate quo error pariatur qui quaerat officiis facere! Rem sint harum voluptatibus consequuntur nihil maxime necessitatibus dolorum ut animi vero.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum sequi voluptate quo error pariatur qui quaerat officiis facere! Rem sint harum voluptatibus consequuntur nihil maxime necessitatibus dolorum ut animi vero.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum sequi voluptate quo error pariatur qui quaerat officiis facere! Rem sint harum voluptatibus consequuntur nihil maxime necessitatibus dolorum ut animi vero.</P>
 
 
+
+
  <?php include_once "predlozak/podnozje.php" ?>
+ 
   </div>
   
    

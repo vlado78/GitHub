@@ -16,6 +16,7 @@
 
 <img src="img/vinkovci_1.jpg" alt="slika Vinkovaca" class="center">
 
+<div class="footer">This footer will always be positioned at the bottom of the page, but <strong>not fixed</strong>.</div>
 
 <?php include_once "predlozak/podnozje.php" ?> 
  </div>

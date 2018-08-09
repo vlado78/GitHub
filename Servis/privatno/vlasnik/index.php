@@ -15,9 +15,9 @@ if(!isset($_SESSION[$idAPP."o"])){
      <?php include_once "../../predlozak/navbar.php" ?>
 
 
-<br>
+<br><h3>Vlasnici</h3>
 
-<a href="novi.php" class="success button expanded">Dodaj novog  vlasnika</a>
+<a href="novi.php"  class="button expanded">Dodaj novog  vlasnika</a>
   
 
 
@@ -44,7 +44,7 @@ a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_
 
   
   <div class="cell large-6">
-    <table>
+  <table class="responsive-card-table unstriped">
       <thead>
         <tr>
           <th>Ime</th>
@@ -62,16 +62,16 @@ a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_
     <tbody>
     <?php foreach($rezultati as $red):?>
       <tr>
-        <td><?php echo $red->ime; ?></td>
-        <td><?php echo $red->prezime; ?></td>
-        <td><?php echo $red->ulica_i_broj; ?></td>
-        <td><?php echo $red->mjesto; ?></td>
-        <td><?php echo $red->broj_mobitela; ?></td>
-        <td><?php echo $red->email; ?></td>
-        <td><?php echo $red->datum_rodjenja; ?></td>
-        <td><?php echo $red->oib; ?></td>
-        <td><?php echo $red->napomena; ?></td>
-        <td>
+      <td data-label="Ime"><?php echo $red->ime; ?></td>
+      <td data-label="Prezime"><?php echo $red->prezime; ?></td>
+      <td data-label="Ulica i broj"><?php echo $red->ulica_i_broj; ?></td>
+      <td data-label="Mjesto"><?php echo $red->mjesto; ?></td>
+      <td data-label="Broj mobitela"><?php echo $red->broj_mobitela; ?></td>
+      <td data-label="e-mail"><?php echo $red->email; ?></td>
+      <td data-label="Datum rođenja"><?php echo $red->datum_rodjenja; ?></td>
+      <td data-label="OIB"><?php echo $red->oib; ?></td>
+      <td data-label="Napomena"><?php echo $red->napomena; ?></td>
+      <td data-label="Akcija">
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
             </a> 

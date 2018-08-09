@@ -22,10 +22,11 @@
               break;
           }
        } ?>
+       
 
 
 <div class="grid-x grid-padding-x ">
-  <div class="large-4 cell text-center">
+  <div class="large-4 cell ">
     <form class="callout text-center" action="autoriziraj.php" method="post">
       <h2>Prijavite se</h2>
       

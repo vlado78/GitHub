@@ -14,6 +14,7 @@
   <div id="topbar-responsive" class="topbar-responsive-links">
     <div class="top-bar-right">
       <ul class="menu simple vertical medium-horizontal">
+      
         <li><a href="<?php echo $putanjaAPP; ?>index.php">Naslovnica</a></li>
         <li><a href="<?php echo $putanjaAPP; ?>onama.php">O nama</a></li>
         <li><a href="<?php echo $putanjaAPP; ?>kontakt.php">Kontakt</a></li>
@@ -47,7 +48,8 @@
             <li><a href="<?php echo $putanjaAPP; ?>privatno/eraDiagram.php">ERA diagram</a></li>  
             <li><a href="https://github.com/vlado78/GitHub/tree/master/Servis" target="_blank">GitHub</a></li>  
             <li><a href="<?php echo $putanjaAPP; ?>privatno/radionice/index.php">Radionice</a></li>    
-            <li><a href="<?php echo $putanjaAPP; ?>privatno/vlasnik/index.php">Vlasnik</a></li>           
+            <li><a href="<?php echo $putanjaAPP; ?>privatno/vlasnik/index.php">Vlasnik</a></li>  
+                     
             </ul>
         </div>
       </div>

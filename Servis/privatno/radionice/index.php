@@ -18,7 +18,7 @@ if(!isset($_SESSION[$idAPP."o"])){
 <br>
 <h3>Radionice</h3>
 
-<a href="novi.php" class="success button expanded">Dodaj novu radionicu</a>
+<a href="novi.php" class=" button expanded">Dodaj novu radionicu</a>
 
   
 
@@ -44,7 +44,7 @@ if(!isset($_SESSION[$idAPP."o"])){
 
   
   <div class="cell large-6">
-    <table>
+  <table class="responsive-card-table unstriped">
       <thead>
         <tr>
           <th>Naziv</th>
@@ -55,9 +55,9 @@ if(!isset($_SESSION[$idAPP."o"])){
       <tbody>
       <?php foreach($rezultati as $red):?>
         <tr>
-        <td><?php echo $red->naziv; ?></td>
-        <td><?php echo $red->datum_osnutka; ?></td>
-        <td>
+        <td data-label="Naziv"><?php echo $red->naziv; ?></td>
+        <td data-label="Datum osnutka"><?php echo $red->datum_osnutka; ?></td>
+        <td data-label="Akcija">
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
             </a>

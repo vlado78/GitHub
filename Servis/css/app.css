@@ -34,7 +34,7 @@
 
 #map {
   height: 400px;  /* The height is 400 pixels */
-  width: 100%;  /* The width is the width of the web page */
+  width: 80%;  /* The width is the width of the web page */
  }
 
  .center {
@@ -64,9 +64,7 @@
 }
 
 @media screen and (max-width: 640px) {
-  .responsive-card-table {
-    
-  }
+ 
   .responsive-card-table thead tr {
     position: absolute;
     top: -9999em;
@@ -115,5 +113,10 @@
     z-index: 0;
   }
 }
+.trenutno {
+  text-decoration-line: underline;
+    text-decoration-style: wavy;
+   
 
-
+ 
+}

@@ -12,10 +12,10 @@
      <?php if(isset($_GET["poruka"])){
           switch($_GET["poruka"]){
           case "1":
-              echo "Neispravna prijava";
+              echo "<strong>Neispravna prijava</strong>";
               break;
           case "2":
-              echo "Niste unijeli korisnika";
+              echo "<strong>Unesite korisnika i lozinku</strong>";
               break;
           default:
               echo "";
@@ -32,12 +32,12 @@
       
       <div class="floated-label-wrapper">
         <label for="full-name">Korisničko ime</label>
-        <input autocomplete="off" type="text" id="korisnik" name="korisnik" placeholder="Ovdje upišite svoje korisničko ime">
+        <input autocomplete="off" type="text" id="korisnik" name="korisnik" placeholder="Ovdje upišite svoje korisničko ime (1)">
       </div>
 
       <div class="floated-label-wrapper">
         <label for="pass">Lozinka</label>
-        <input autocomplete="off" type="password" id="lozinka" name="lozinka" placeholder="Ovdje upišite svoju lozinku">
+        <input autocomplete="off" type="password" id="lozinka" name="lozinka" placeholder="Ovdje upišite svoju lozinku (1)">
       </div>
 
       <input class="button expanded" type="submit" value="Prijavi se">
@@ -54,7 +54,7 @@
 
 
 <?php include_once "predlozak/podnozje.php" ?>
-   ovo je stranica prijave
+ 
   </div>
   
     

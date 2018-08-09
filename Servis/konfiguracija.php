@@ -3,6 +3,7 @@ session_start();
 $putanjaAPP="/Servis/";
 $nazivAPP="Moj mali servis";
 $idAPP="Servis";
+include_once "funkcije.php";
 
 switch($_SERVER["HTTP_HOST"]){
     case "localhost":

@@ -76,7 +76,7 @@ a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_
             <i class="fas fa-edit fa-2x"></i> 
             </a> 
             <?php if($red->vozila==0): ?>
-				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->naziv ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
+				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->ime,$red->prezime ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
 				    <i class="fas fa-trash fa-2x" style="color: red;"></i>
             </a> 
             <?php endif;?>

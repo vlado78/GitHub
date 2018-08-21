@@ -1,7 +1,7 @@
 <?php include_once "../../konfiguracija.php" ;
-if(!isset($_SESSION[$idAPP."o"])){
-  header("location: " . $putanjaAPP . "index.php");
-}
+  if(!isset($_SESSION[$idAPP."o"])){
+    header("location: " . $putanjaAPP . "index.php");
+  }
 ?>
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
@@ -11,8 +11,8 @@ if(!isset($_SESSION[$idAPP."o"])){
   <body>
   <div class="grid-container">
 
-     <?php include_once "../../predlozak/zaglavlje.php" ?>
-     <?php include_once "../../predlozak/navbar.php" ?>
+  <?php include_once "../../predlozak/zaglavlje.php" ?>
+  <?php include_once "../../predlozak/navbar.php" ?>
 
 
 <br>
@@ -45,36 +45,34 @@ if(!isset($_SESSION[$idAPP."o"])){
   
   <div class="cell large-6">
   <table class="responsive-card-table unstriped">
-      <thead>
-        <tr>
-          <th>Naziv</th>
-          <th>Datum osnutka</th>
-          <th>Akcija</th>
-        </tr>
-      </thead>
-      <tbody>
-      <?php foreach($rezultati as $red):?>
-        <tr>
+
+    <thead>
+      <tr>
+        <th>Naziv</th>
+        <th>Datum osnutka</th>
+        <th>Akcija</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    <?php foreach($rezultati as $red):?>
+      <tr>
         <td data-label="Naziv"><?php echo $red->naziv; ?></td>
         <td data-label="Datum osnutka"><?php echo $red->datum_osnutka; ?></td>
         <td data-label="Akcija">
-            <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
+          <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
+          </a>
+          <?php if($red->flag_to_delete!=0): ?>
+            <a onclick="return confirm('Sigurno obrisati <?php echo $red->naziv ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
+            <i class="fas fa-trash fa-2x" style="color: red;"></i>
             </a>
-            <?php if($red->flag_to_delete!=0): ?>
-				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->naziv ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
-				    <i class="fas fa-trash fa-2x" style="color: red;"></i>
-				    </a>
-			<?php endif;?>
-          
-            
-          
-            </td>
-        </tr>
-        
-        </tr>
-      <?php endforeach;?>
-      </tbody>
+          <?php endif;?>
+          </td>
+      </tr>
+     </tr>
+    <?php endforeach;?>
+    </tbody>
     </table>
   </div>
   

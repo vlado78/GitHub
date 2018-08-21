@@ -19,6 +19,13 @@ Ovo je PDO
     <div class="cell large-6">
     
       <?php
+ echo "<pre>";
+ print_r($_SERVER["PHP_SELF"]);
+ echo "</pre>";
+ print_r($putanjaAPP);
+ echo "</pre>";
+ print_r($stranica);
+           
 
       $izraz = $veza->prepare("select * from radionica");
       $izraz->execute();

@@ -73,7 +73,7 @@ if(isset($_POST["dodaj"])){
 
       <div class="floated-label-wrapper">
         <label for="napomena">Napomena</label>
-        <input  autocomplete="off" type="text" id="napomena" name="napomena" placeholder="Napomena" >
+        <textarea  autocomplete="off" type="text" id="napomena" name="napomena" placeholder="Napomena" ></textarea>
       </div>
 
       

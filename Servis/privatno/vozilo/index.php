@@ -19,11 +19,11 @@ if(!isset($_SESSION[$idAPP."o"])){
 <div class="grid-x">
            
   <div class="cell large-4">
-    <h3>Vlasnici</h3>
+    <h3>Vozila</h3>
   </div>
   <div class="cell large-4"></div>
   <div class="cell large-4">
-    <a href="novi.php"  class="button expanded">Dodaj novog  vlasnika</a>
+    <a href="novi.php"  class="button expanded">Dodaj novo vozilo</a>
   </div>
 </div>       
 
@@ -35,13 +35,10 @@ if(!isset($_SESSION[$idAPP."o"])){
  
  $izraz = $veza->prepare("
  
- select 
-a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_rodjenja,a.oib,a.napomena,
- count(b.sifra) as vozila
- from vlasnik a left join vozilo b
- on a.sifra=b.vlasnik 
-group by
-a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_rodjenja,a.oib,a.napomena
+ select *
+ from vozilo 
+  
+
  ");
 
 
@@ -57,13 +54,12 @@ a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_
   <table class="responsive-card-table unstriped">
       <thead>
         <tr>
-          <th>Ime</th>
-          <th>Prezime</th>
-          <th>Ulica i broj</th>
-          <th>Mjesto</th>
-          <th>Broj mobitela</th>
-          <th>e-mail</th>
-          <th>Datum rođenja</th>
+          <th>Broj Šasije</th>
+          <th>Vlasnik</th>
+          <th>Datum prve reg.</th>
+          <th>Registracija</th>
+          <th>Marka</th>
+          <th>Model</th>
           <th>Napomena</th>
           <th>Akcija</th>
         </tr>
@@ -71,20 +67,19 @@ a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_
     <tbody>
     <?php foreach($rezultati as $red):?>
       <tr>
-      <td data-label="Ime"><?php echo $red->ime; ?></td>
-      <td title="<?php echo "OIB: " . $red->oib; ?>"><?php echo $red->prezime; ?></td>
-      <td data-label="Ulica i broj"><?php echo $red->ulica_i_broj; ?></td>
-      <td data-label="Mjesto"><?php echo $red->mjesto; ?></td>
-      <td data-label="Broj mobitela"><?php echo $red->broj_mobitela; ?></td>
-      <td data-label="e-mail"><?php echo $red->email; ?></td>
-      <td data-label="Datum rođenja"><?php echo $red->datum_rodjenja; ?></td>
+      <td data-label="Broj Šasije"><?php echo $red->broj_sasije; ?></td>
+      <td data-label="Vlasnik"><?php echo $red->vlasnik; ?></td>
+      <td data-label="Datum prve reg."><?php echo $red->datum_prve_registracije; ?></td>
+      <td data-label="Registracija"><?php echo $red->registarska_oznaka; ?></td>
+      <td data-label="Marka"><?php echo $red->marka_vozila; ?></td>
+      <td data-label="Model"><?php echo $red->oznaka_modela; ?></td>
       <td data-label="Napomena"><?php echo $red->napomena; ?></td>
       <td data-label="Akcija">
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
             </a> 
-            <?php if($red->vozila==0): ?>
-				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->ime,$red->prezime ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
+            <?php if($red->vozila==0): // brisanje vozila ako nema radni nalog?>
+				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->registarska_oznaka ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
 				    <i class="fas fa-trash fa-2x" style="color: red;"></i>
             </a> 
             <?php endif;?>

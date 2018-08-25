@@ -16,10 +16,16 @@
 
 
 <br>
-<h3>Radionice</h3>
-
-<a href="novi.php" class=" button expanded">Dodaj novu radionicu</a>
-
+<div class="grid-x">
+           
+  <div class="cell large-4">
+    <h3>Radionice</h3>
+  </div>
+  <div class="cell large-4"></div>
+  <div class="cell large-4">
+    <a href="novi.php"  class="button expanded">Dodaj novu radionicu</a>
+  </div>
+</div>       
   
 
 

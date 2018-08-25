@@ -8,15 +8,13 @@ if(!isset($_GET["sifra"]) && !isset($_POST["sifra"])){
 }
 
 if(isset($_POST["promjeni"])){
-  $izraz = $veza->prepare("update vlasnik set 
-              ime=:ime, 
-              prezime=:prezime, 
-              ulica_i_broj=:ulica_i_broj, 
-              mjesto=:mjesto, 
-              broj_mobitela=:broj_mobitela, 
-              email=:email, 
-              datum_rodjenja=:datum_rodjenja, 
-              oib=:oib, 
+  $izraz = $veza->prepare("update vozilo set 
+              broj_sasije=:broj_sasije, 
+              vlasnik=:vlasnik, 
+              datum_prve_registracije=:datum_prve_registracije, 
+              registarska_oznaka=:registarska_oznaka, 
+              marka_vozila=:marka_vozila, 
+              oznaka_modela=:oznaka_modela,  
               napomena=:napomena
               where sifra=:sifra;");
               
@@ -24,7 +22,7 @@ if(isset($_POST["promjeni"])){
   $izraz->execute($_POST);
   header("location: index.php");
 }else{
-  $izraz = $veza->prepare("select * from vlasnik where sifra=:sifra");
+  $izraz = $veza->prepare("select * from vozilo where sifra=:sifra");
   $izraz->execute($_GET);
   $o=$izraz->fetch(PDO::FETCH_OBJ);
 }
@@ -44,47 +42,38 @@ if(isset($_POST["promjeni"])){
   <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
     
     <div class="floated-label-wrapper">
-      <label for="ime">Ime</label>
-      <input value="<?php echo $o->ime ?>" autocomplete="off" type="text" id="ime" name="ime" placeholder="Ime">
+      <label for="broj_sasije">Broj šasije</label>
+      <input value="<?php echo $o->broj_sasije ?>" autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije">
     </div>
     
     <div class="floated-label-wrapper">
-      <label for="prezime">Prezime</label>
-      <input value="<?php echo $o->prezime ?>" autocomplete="off" type="text" id="prezime" name="prezime" placeholder="Prezime" >
+      <label for="vlasnik">Vlasnik</label>
+      <input value="<?php echo $o->vlasnik ?>" autocomplete="off" type="text" id="vlasnik" name="vlasnik" placeholder="Vlasnik" >
     </div>
 
     <div class="floated-label-wrapper">
-      <label for="ulica_i_broj">Ulica i broj</label>
-      <input value="<?php echo $o->ulica_i_broj ?>" autocomplete="off" type="text" id="ulica_i_broj" name="ulica_i_broj" placeholder="Ulica i broj" >
+      <label for="datum_prve_registracije">Datum prve registracije</label>
+      <input value="<?php echo $o->datum_prve_registracije ?>" autocomplete="off" type="date" id="datum_prve_registracije" name="datum_prve_registracije" placeholder="Datum prve registracije" >
     </div>
 
     <div class="floated-label-wrapper">
-      <label for="mjesto">Mjesto</label>
-      <input value="<?php echo $o->mjesto ?>" autocomplete="off" type="text" id="mjesto" name="mjesto" placeholder="Mjesto" >
+      <label for="registarska_oznaka">Registracija</label>
+      <input value="<?php echo $o->registarska_oznaka ?>" autocomplete="off" type="text" id="registarska_oznaka" name="registarska_oznaka" placeholder="Registracija" >
     </div>
 
     
 
     <div class="floated-label-wrapper">
-      <label for="broj_mobitela">Broj mobitela</label>
-      <input value="<?php echo $o->broj_mobitela ?>" autocomplete="off" type="text" id="broj_mobitela" name="broj_mobitela" placeholder="Broj mobitela" >
+      <label for="marka_vozila">Marka</label>
+      <input value="<?php echo $o->marka_vozila ?>" autocomplete="off" type="text" id="marka_vozila" name="marka_vozila" placeholder="Marka" >
     </div>
 
     <div class="floated-label-wrapper">
-      <label for="email">Email</label>
-      <input value="<?php echo $o->email ?>" autocomplete="off" type="text" id="email" name="email" placeholder="Email" >
+      <label for="oznaka_modela">Model</label>
+      <input value="<?php echo $o->oznaka_modela ?>" autocomplete="off" type="text" id="oznaka_modela" name="oznaka_modela" placeholder="Model" >
     </div>
 
-    <div class="floated-label-wrapper">
-      <label for="datum_rodjenja">Datum rođenja</label>
-      <input value="<?php echo $o->datum_rodjenja ?>" autocomplete="off" type="date" id="datum_rodjenja" name="datum_rodjenja" placeholder="Datum rođenja" >
-    </div>
-
-    <div class="floated-label-wrapper">
-      <label for="oib">Oib</label>
-      <input value="<?php echo $o->oib ?>" autocomplete="off" id="oib" type="text" name="oib" placeholder="Oib" >
-    </div>
-
+    
     <div class="floated-label-wrapper">
       <label for="napomena">Napomena</label>
       <textarea value="<?php echo $o->napomena ?>" autocomplete="off" id="napomena" name="napomena" placeholder="Napomena" ></textarea>

@@ -6,8 +6,10 @@ if(!isset($_SESSION[$idAPP."o"])){
 
 
 if(isset($_POST["dodaj"])){
-  $izraz = $veza->prepare("insert into vlasnik (ime,prezime,ulica_i_broj,mjesto,broj_mobitela,email,datum_rodjenja,oib,napomena) values
-              (:ime,:prezime,:ulica_i_broj,:mjesto,:broj_mobitela,:email,:datum_rodjenja,:oib,:napomena)");
+  $izraz = $veza->prepare("insert into vozilo 
+  (broj_sasije,vlasnik,datum_prve_registracije,registarska_oznaka,marka_vozila,oznaka_modela,napomena) 
+  values
+  (:broj_sasije,:vlasnik,:datum_prve_registracije,:registarska_oznaka,:marka_vozila,:oznaka_modela,:napomena)");
             
   unset($_POST["dodaj"]);
   $izraz->execute($_POST);
@@ -27,50 +29,41 @@ if(isset($_POST["dodaj"])){
    <?php include_once "../../predlozak/zaglavlje.php" ?>
     <?php include_once "../../predlozak/navbar.php" ?>
 
-   <h3>Novi vlasnik</h3>
+   <h3>Novo vozilo</h3>
     <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
 
 
       <div class="floated-label-wrapper">
-        <label for="ime">Ime</label>
-        <input  autocomplete="off" type="text" id="ime" name="ime" placeholder="Ime">
+        <label for="broj_sasije">Broj šasije</label>
+        <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije">
       </div>
       
       <div class="floated-label-wrapper">
-        <label for="prezime">Prezime</label>
-        <input  autocomplete="off" type="text" id="prezime" name="prezime" placeholder="Prezime" >
+        <label for="vlasnik">Vlasnik</label>
+        <input  autocomplete="off" type="text" id="vlasnik" name="vlasnik" placeholder="Vlasnik" >
       </div>
 
       <div class="floated-label-wrapper">
-        <label for="ulica_i_broj">Ulica i broj</label>
-        <input  autocomplete="off" type="text" id="ulica_i_broj" name="ulica_i_broj" placeholder="Ulica i broj" >
+        <label for="datum_prve_registracije">Datum prve registracije</label>
+        <input  autocomplete="off" type="date" id="datum_prve_registracije" name="datum_prve_registracije" placeholder="Datum prve registracije" >
       </div>
 
       <div class="floated-label-wrapper">
-        <label for="mjesto">Mjesto</label>
-        <input  autocomplete="off" type="text" id="mjesto" name="mjesto" placeholder="Mjesto" >
+        <label for="registarska_oznaka">Registracija</label>
+        <input  autocomplete="off" type="text" id="registarska_oznaka" name="registarska_oznaka" placeholder="Registracija" >
       </div>
 
       <div class="floated-label-wrapper">
-        <label for="broj_mobitela">Broj mobitela</label>
-        <input  autocomplete="off" type="text" id="broj_mobitela" name="broj_mobitela" placeholder="Broj mobitela" >
+        <label for="marka_vozila">Marka</label>
+        <input  autocomplete="off" type="text" id="marka_vozila" name="marka_vozila" placeholder="Marka" >
       </div>
 
       <div class="floated-label-wrapper">
-        <label for="email">Email</label>
-        <input  autocomplete="off"  type="text" id="email" name="email" placeholder="Email" >
+        <label for="oznaka_modela">Model</label>
+        <input  autocomplete="off"  type="text" id="oznaka_modela" name="oznaka_modela" placeholder="Model" >
       </div>
 
-      <div class="floated-label-wrapper">
-        <label for="datum_rodjenja">Datum rođenja</label>
-        <input  autocomplete="off" type="date"id="datum_rodjenja" name="datum_rodjenja" placeholder="Datum rođenja" >
-      </div>
-
-      <div class="floated-label-wrapper">
-        <label for="oib">Oib</label>
-        <input  autocomplete="off" type="text" id="oib" name="oib" placeholder="Oib" >
-      </div>
-
+      
       <div class="floated-label-wrapper">
         <label for="napomena">Napomena</label>
         <textarea  autocomplete="off" type="text" id="napomena" name="napomena" placeholder="Napomena" ></textarea>
@@ -82,7 +75,7 @@ if(isset($_POST["dodaj"])){
             </div>
             <div class="cell large-2"></div>
             <div class="cell large-4">
-              <input class="button expanded" type="submit" name="dodaj" value="Dodaj novi">
+              <input class="button expanded" type="submit" name="dodaj" value="Dodaj novo vozilo">
             </div>
           </div>       
 

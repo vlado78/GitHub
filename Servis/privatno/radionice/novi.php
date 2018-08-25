@@ -37,9 +37,18 @@ if(isset($_POST["dodaj"])){
       <input autocomplete="off" type="date" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka">
     </div>
     
+    <div class="grid-x">
+            <div class="cell large-1"></div>
+            <div class="cell large-4">
+              <a href="index.php" class="alert button expanded">Nazad</a>
+            </div>
+            <div class="cell large-2"></div>
+            <div class="cell large-4">
+              <input class="button expanded" type="submit" name="dodaj" value="Dodaj novi">
+            </div>
+          </div>       
             
-            
-    <input class="button expanded" type="submit" name="dodaj" value="Dodaj novi">
+   
   </form>
    <?php include_once "../../predlozak/podnozje.php" ?>
   <?php include_once "../../predlozak/skripte.php" ?>

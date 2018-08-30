@@ -5,6 +5,7 @@ if(!isset($_SESSION[$idAPP."o"])){
 
 
 
+
 if(isset($_POST["dodaj"])){
   $izraz = $veza->prepare("insert into vozilo 
   (broj_sasije,vlasnik,datum_prve_registracije,registarska_oznaka,marka_vozila,oznaka_modela,napomena) 
@@ -34,14 +35,36 @@ if(isset($_POST["dodaj"])){
 
 
       <div class="floated-label-wrapper">
-        <label for="broj_sasije">Broj šasije</label>
-        <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije">
+        
+          <label for="broj_sasije">Broj šasije</label>
+
+          <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije">
+
+        
       </div>
       
-      <div class="floated-label-wrapper">
-        <label for="vlasnik">Vlasnik</label>
-        <input  autocomplete="off" type="text" id="vlasnik" name="vlasnik" placeholder="Vlasnik" >
-      </div>
+      
+      
+      <label for="vlasnika">Vlasnik</label>
+            <select id="vlasnik" name="vlasnik">
+              <option value="0">Odaberi vlasnika</option>  
+              <?php 
+              
+              $izraz = $veza->prepare("
+              
+              select sifra, concat(ime, ' ',prezime) as vlasnik
+              from vlasnik
+
+
+              ");
+              $izraz->execute();
+              $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+               foreach($rezultati as $red):?>
+             <option value="<?php echo $red->sifra ?>"><?php echo $red->vlasnik ?></option>  
+            <?php endforeach;?>
+              
+              ?>
+            </select>
 
       <div class="floated-label-wrapper">
         <label for="datum_prve_registracije">Datum prve registracije</label>
@@ -68,7 +91,9 @@ if(isset($_POST["dodaj"])){
         <label for="napomena">Napomena</label>
         <textarea  autocomplete="off" type="text" id="napomena" name="napomena" placeholder="Napomena" ></textarea>
       </div>
-      <div class="grid-x">
+
+
+      <div class="grid-x"> 
             <div class="cell large-1"></div>
             <div class="cell large-4">
               <a href="index.php" class="alert button expanded">Nazad</a>

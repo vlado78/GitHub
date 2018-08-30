@@ -76,7 +76,7 @@ if(isset($_POST["promjeni"])){
     
     <div class="floated-label-wrapper">
       <label for="napomena">Napomena</label>
-      <textarea value="<?php echo $o->napomena ?>" autocomplete="off" id="napomena" name="napomena" placeholder="Napomena" ></textarea>
+      <textarea  autocomplete="off" id="napomena" name="napomena" placeholder="Napomena" > <?php echo $o->napomena ?></textarea>
        
     </div>
 

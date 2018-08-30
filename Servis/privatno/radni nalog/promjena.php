@@ -64,7 +64,7 @@ if(isset($_POST["promjeni"])){
 
     <div class="floated-label-wrapper">
       <label for="opis_kvara">Opis kvara</label>
-      <textarea value="<?php echo $o->opis_kvara ?>" autocomplete="on"  id="opis_kvara" name="opis_kvara" placeholder="Opis kvara" ></textarea>
+      <textarea  autocomplete="on"  id="opis_kvara" name="opis_kvara" placeholder="Opis kvara" ><?php echo $o->opis_kvara ?> </textarea>
     </div>
     
 
@@ -81,7 +81,7 @@ if(isset($_POST["promjeni"])){
     
     <div class="floated-label-wrapper">
       <label for="napomena">Napomena</label>
-      <textarea value="<?php echo $o->napomena ?>" autocomplete="off" id="napomena" name="napomena" placeholder="Napomena" ></textarea>
+      <textarea  autocomplete="off" id="napomena" name="napomena" placeholder="Napomena" ><?php echo $o->napomena ?> </textarea>
        
     </div>
 

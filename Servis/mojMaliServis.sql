@@ -3,11 +3,11 @@ drop database if exists autoservis;
 create database autoservis default character set utf8;
 
 # za byethost
-alter database autoservis default character set utf8;
+#alter database b17_21947030_autoservis default character set utf8;
 #sipavanje
 #c:\xampp\mysql\bin\mysql -uedunova -pedunova --default_character_set=utf8 < C:\xampp\htdocs\Servis\autoservis.sql
 
-use autoservis;
+use b17_21947030_autoservis;
 
 create table radionica(
 sifra int primary key not null auto_increment,

@@ -66,6 +66,7 @@ if(isset($_POST["promjeni"])){
   <?php include_once "../../predlozak/navbar.php" ?>
   <h3>Promijeni podatke vozila</h3>
   <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
+  
     
     <div class="floated-label-wrapper">
       <label for="broj_sasije">Broj šasije</label>

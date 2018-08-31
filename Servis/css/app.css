@@ -4,17 +4,13 @@
 }
 
 .floated-label-wrapper label {
+  text-align: left;
   background: #fefefe;
   color: #1779ba;
   font-size: 0.75rem;
   font-weight: 600;
   left: 0.75rem;
-  opacity: 0;
-  padding: 0 0.25rem;
-  position: absolute;
-  top: 2rem;
-  transition: all 0.15s ease-in;
-  z-index: -1;
+ 
 }
 
 .floated-label-wrapper label input[type=text],
@@ -31,6 +27,11 @@
   z-index: 1;
   transition: all 0.15s ease-in;
 }
+
+
+
+
+
 
 #map {
   height: 400px;  /* The height is 400 pixels */

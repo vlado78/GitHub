@@ -35,9 +35,22 @@ if(!isset($_SESSION[$idAPP."o"])){
  
  $izraz = $veza->prepare("
  
- select *
- from radni_nalog 
-  
+ select 
+ a.sifra, 
+ b.naziv as radionica, 
+ concat(c.ime,' ',c.prezime) as zaposlenik, 
+ concat(d.marka_vozila,' ',d.oznaka_modela) as vozilo, 
+ a.kilometraza, 
+ concat(e.ime,' ',e.prezime) as vlasnik,
+ a.opis_kvara, 
+ a.datum_pocetka, 
+ a.datum_zavrsetka, 
+ a.napomena
+ from radni_nalog a 
+ left join radionica b on a.radionica=b.sifra 
+ left join zaposlenik c on a.zaposlenik=c.sifra 
+ left join vozilo d on a.vozilo=d.sifra
+ left join vlasnik e on a.vozilo=e.sifra
 
  ");
 
@@ -58,10 +71,11 @@ if(!isset($_SESSION[$idAPP."o"])){
           <th>Radionica</th>
           <th>Zaposlenik</th>
           <th>Vozilo</th>
+          <th>Vlasnik</th>
           <th>Kilometraža</th>
           <th>Opis kvara</th>
-          <th>Datum početka</th>
-          <th>Datum kraja</th>
+          <th>Datum i vrijeme početka</th>
+          <th>Datum i vrijeme kraja</th>
           <th>Napomena</th>
           <th>Akcija</th>
         </tr>
@@ -73,6 +87,7 @@ if(!isset($_SESSION[$idAPP."o"])){
       <td data-label="Radionica"><?php echo $red->radionica; ?></td>
       <td data-label="Zaposlenik"><?php echo $red->zaposlenik; ?></td>
       <td data-label="Vozilo"><?php echo $red->vozilo; ?></td>
+      <td data-label="Zaposlenik"><?php echo $red->vlasnik; ?></td>
       <td data-label="Kilometraža"><?php echo $red->kilometraza; ?></td>
       <td data-label="Opis kvara"><?php echo $red->opis_kvara; ?></td>
       <td data-label="Datum početka"><?php echo $red->datum_pocetka; ?></td>

@@ -34,19 +34,77 @@ if(isset($_POST["dodaj"])){
 
 
       <div class="floated-label-wrapper">
-        <label for="radionica">Radionica</label>
-        <input  autocomplete="off" type="number" id="radionica" name="radionica" placeholder="Radionica">
+
+         <label for="radionica">Radionica</label>
+            <select id="radionica" name="radionica">
+              <option value="0">Odaberite radionice</option>  
+              <?php 
+              
+              $izraz = $veza->prepare("
+              
+              select * from radionica
+
+
+              ");
+              $izraz->execute();
+              $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+               foreach($rezultati as $red):?>
+             <option value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>  
+            <?php endforeach;?>
+              
+              ?>
+            </select>
+
+
+
+
       </div>
       
       <div class="floated-label-wrapper">
-        <label for="Zaposlenik">Zaposlenik</label>
-        <input  autocomplete="off" type="number" id="zaposlenik" name="zaposlenik" placeholder="Zaposlenik" >
-      </div>
 
-      <div class="floated-label-wrapper">
-        <label for="vozilo">Vozilo</label>
-        <input  autocomplete="off" type="number" id="vozilo" name="vozilo" placeholder="Vozilo" >
-      </div>
+<label for="zaposlenik">Zaposlenik</label>
+   <select id="zaposlenik" name="zaposlenik">
+     <option value="0">Odaberite zaposlenika</option>  
+     <?php 
+     // ako bude izabrana mehanika pokazati samo zaposlenike iz mehanike
+     $izraz = $veza->prepare("
+     
+     select concat(ime,' ',prezime) as zaposlenik from zaposlenik where radionica=1 
+
+
+     ");
+     $izraz->execute();
+     $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+      foreach($rezultati as $red):?>
+    <option value="<?php echo $red->sifra ?>"><?php echo $red->zaposlenik ?></option>  
+   <?php endforeach;?>
+     
+     ?>
+   </select>
+
+
+
+
+</div>
+      
+<label for="vozilo">Vozilo</label>
+   <select id="vozilo" name="vozilo">
+     <option value="0">Odaberite Vozilo</option>  
+     <?php 
+     
+     $izraz = $veza->prepare("
+     
+     select concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
+
+     ");
+     $izraz->execute();
+     $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+      foreach($rezultati as $red):?>
+    <option value="<?php echo $red->sifra ?>"><?php echo $red->vozilo ?></option>  
+   <?php endforeach;?>
+     
+     ?>
+   </select>
 
       <div class="floated-label-wrapper">
         <label for="kilometraza">Kilometaža</label>

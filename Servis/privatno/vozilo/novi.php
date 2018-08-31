@@ -35,12 +35,25 @@ if(isset($_POST["dodaj"])){
 
 
       <div class="floated-label-wrapper">
-        
+      <?php if(!isset($_POST["broj_sasije"]) || $_POST["broj_sasije"]!=""): ?>
           <label for="broj_sasije">Broj šasije</label>
 
-          <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije">
+          <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije"
+                value="<?php echo isset($_POST["broj_sasije"]) ? $_POST["broj_sasije"] : "" ?>">
+      <?php else:?>  
+      <label class="is-invalid-label">
+                Zahtjevani unos
+                <input type="text" class="is-invalid-input" aria-describedby="nazivGreska" data-invalid="" 
+                aria-invalid="true" autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije">
+                <span class="form-error is-visible" id="nazivGreska">
+                Molimo unesite naziv smjera
+                </span>
+                </label>
 
-        
+
+      <?php endif;?>
+
+
       </div>
       
       

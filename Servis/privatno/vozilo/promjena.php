@@ -22,7 +22,33 @@ if(isset($_POST["promjeni"])){
   $izraz->execute($_POST);
   header("location: index.php");
 }else{
-  $izraz = $veza->prepare("select * from vozilo where sifra=:sifra");
+  $izraz = $veza->prepare("
+ 
+
+  select a.sifra,
+  a.broj_sasije , 
+ concat (b.ime,' ', b.prezime) as vlasnik  ,
+  a.datum_prve_registracije ,
+  a.registarska_oznaka ,
+  a.marka_vozila  ,
+  a.oznaka_modela ,
+  a.napomena 
+ 
+  
+ from vozilo a left join vlasnik b
+ on a.vlasnik=b.sifra where a.sifra=:sifra
+ 
+
+ group by
+  a.broj_sasije, 
+  concat (b.ime,' ', b.prezime) ,
+  a.datum_prve_registracije,
+  a.registarska_oznaka,
+  a.marka_vozila ,
+  a.oznaka_modela,
+  a.napomena 
+  
+  ");
   $izraz->execute($_GET);
   $o=$izraz->fetch(PDO::FETCH_OBJ);
 }
@@ -38,7 +64,7 @@ if(isset($_POST["promjeni"])){
 
   <?php include_once "../../predlozak/zaglavlje.php" ?>
   <?php include_once "../../predlozak/navbar.php" ?>
-  <h3>Promijeni vozilo</h3>
+  <h3>Promijeni podatke vozila</h3>
   <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
     
     <div class="floated-label-wrapper">
@@ -46,15 +72,34 @@ if(isset($_POST["promjeni"])){
       <input value="<?php echo $o->broj_sasije ?>" autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije">
     </div>
     
-    <div class="floated-label-wrapper">
-      <label for="vlasnik">Vlasnik</label>
-      <input value="<?php echo $o->vlasnik ?>" autocomplete="off" type="text" id="vlasnik" name="vlasnik" placeholder="Vlasnik" >
-    </div>
+  <div class="floated-label-wrapper">
+    <label for="vlasnika">Vlasnik</label>
+          <select id="vlasnik" name="vlasnik">
+            <option value="0"><?php echo $o->vlasnik ?> </option>  
+            <?php 
+            
+            $izraz = $veza->prepare("
+            
+            select sifra, concat(ime, ' ',prezime) as vlasnik
+            from vlasnik
+
+
+            ");
+            $izraz->execute();
+            $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+              foreach($rezultati as $red):?>
+            <option value="<?php echo $red->sifra ?>"><?php echo $red->vlasnik ?></option>  
+          <?php endforeach;?>
+            
+            ?>
+          </select>
+  </div>
 
     <div class="floated-label-wrapper">
       <label for="datum_prve_registracije">Datum prve registracije</label>
-      <input value="<?php echo $o->datum_prve_registracije ?>" autocomplete="off" type="date" id="datum_prve_registracije" name="datum_prve_registracije" placeholder="Datum prve registracije" >
+      <input value="<?php echo $o->datdatum_prve_registracijeum_rodjenja ?>" autocomplete="off" type="date" id="datum_prve_registracije" name="datum_prve_registracije" placeholder="Datum prve registracije" >
     </div>
+    
 
     <div class="floated-label-wrapper">
       <label for="registarska_oznaka">Registracija</label>

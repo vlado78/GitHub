@@ -114,8 +114,8 @@
   }
 }
 .trenutno {
-  text-decoration-line: underline;
-    text-decoration-style: wavy;
+  font-style: italic;
+  text-transform: uppercase;
    
 
  

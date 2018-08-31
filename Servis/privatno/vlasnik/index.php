@@ -77,7 +77,7 @@ a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_
       <td data-label="Mjesto"><?php echo $red->mjesto; ?></td>
       <td data-label="Broj mobitela"><?php echo $red->broj_mobitela; ?></td>
       <td data-label="e-mail"><?php echo $red->email; ?></td>
-      <td data-label="Datum rođenja"><?php echo $red->datum_rodjenja; ?></td>
+      <td data-label="Datum rođenja"><?php echo date ("d.m.Y.",strtotime($red->datum_rodjenja)); ?></td>
       <td data-label="Napomena"><?php echo $red->napomena; ?></td>
       <td data-label="Akcija">
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">

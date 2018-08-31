@@ -14,7 +14,7 @@
 
     ovo je naslovnica
 
-<img src="img/vinkovci_1.jpg" alt="slika Vinkovaca" class="center">
+<img src="img/ja_auto.jpg" alt="moja slika" class="center">
 
 
 

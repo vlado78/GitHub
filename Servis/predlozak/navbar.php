@@ -2,7 +2,7 @@
 
   <div class="top-bar-title" >
     <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
-      <button class="menu-icon" type="button" data-toggle></button>
+      <button class="menu-icon" id="javno" type="button" data-toggle></button>
     </span>
     <?php if(!isset( $_SESSION[$idAPP."o"])): ?>
       <a class="topbar-responsive-logo" href="#"><strong>Moj mali servis</strong></a>
@@ -40,7 +40,7 @@
 
     <div class="top-bar-title">
       <span data-responsive-toggle="topbar-responsive" data-hide-for="medium">
-        <button class="menu-icon" type="button" data-toggle></button>
+        <button class="menu-icon"   id="privatno" type="button" data-toggle></button>
       </span>
     </div>
 

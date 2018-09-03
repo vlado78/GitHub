@@ -29,17 +29,20 @@ if(isset($_POST["dodaj"])){
 
    <h3>Novi vlasnik</h3>
     <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
-
-
+    
+   
       <div class="floated-label-wrapper">
         <label for="ime">Ime</label>
         <input  autocomplete="off" type="text" id="ime" name="ime" placeholder="Ime">
       </div>
       
+
+        
       <div class="floated-label-wrapper">
         <label for="prezime">Prezime</label>
         <input  autocomplete="off" type="text" id="prezime" name="prezime" placeholder="Prezime" >
       </div>
+     
 
       <div class="floated-label-wrapper">
         <label for="ulica_i_broj">Ulica i broj</label>

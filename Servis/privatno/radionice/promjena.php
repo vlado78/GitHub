@@ -59,7 +59,7 @@ if(isset($_POST["promjeni"])){
         
         <div class="floated-label-wrapper">
           <label for="datum_osnutka">Datum osnutka</label>
-          <input value="<?php echo $o->datum_osnutka ?>" type="date" autocomplete="off" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka" >
+          <input value="<?php echo   (  DateTime::createFromFormat('Y-m-d', $o->datum_osnutka) ) ?>" type="date" autocomplete="off" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka" >
         </div>
 
         

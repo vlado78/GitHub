@@ -25,7 +25,11 @@ if(isset($_POST["promjeni"])){
   $izraz = $veza->prepare("select * from radionica where sifra=:sifra");
   $izraz->execute($_GET);
   $o=$izraz->fetch(PDO::FETCH_OBJ);
-}
+  
+    
+    
+  }
+
 ?>
 
 

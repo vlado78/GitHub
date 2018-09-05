@@ -3,15 +3,84 @@ if(!isset($_SESSION[$idAPP."o"])){
   header("location: " . $putanjaAPP . "index.php");
 }
 
-
+$greske=Array();
 
 if(isset($_POST["dodaj"])){
+
+  if(trim($_POST["ime"])===""){
+    $greske["ime"]="Obavezno unos imena ";
+  }
+
+  if(strlen($_POST["ime"])>50){
+    $greske["ime"]="Ime smije imati maksimalno 50 znakovam vi, ste stavili " . strlen($_POST["ime"]) . " znakova";
+  }
+
+  
+  if(trim($_POST["prezime"])===""){
+    $greske["prezime"]="Obavezno unos prezimena";
+  }
+
+  if(strlen($_POST["prezime"])>50){
+    $greske["prezime"]="Prezime smije imati maksimalno 50 znakovam vi, ste stavili " . strlen($_POST["prezime"]) . " znakova";
+  }
+
+
+
+  if(count($greske)===0){
+
+
   $izraz = $veza->prepare("insert into vlasnik (ime,prezime,ulica_i_broj,mjesto,broj_mobitela,email,datum_rodjenja,oib,napomena) values
               (:ime,:prezime,:ulica_i_broj,:mjesto,:broj_mobitela,:email,:datum_rodjenja,:oib,:napomena)");
-            
+   
+              $izraz->bindParam(":ime",$_POST["ime"]);
+              $izraz->bindParam(":prezime",$_POST["prezime"]);
+        
+              if($_POST["ulica_i_broj"]==="0"){
+                $izraz->bindValue(":ulica_i_broj",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":ulica_i_broj",$_POST["predavac"]);
+              }
+        
+              if($_POST["mjesto"]===""){
+                $izraz->bindValue(":mjesto",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":mjesto",$_POST["mjesto"]);
+              }     
+
+              if($_POST["broj_mobitela"]===""){
+                $izraz->bindValue(":broj_mobitela",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":broj_mobitela",$_POST["broj_mobitela"]);
+              } 
+              
+              if($_POST["email"]===""){
+                $izraz->bindValue(":email",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":email",$_POST["email"]);
+              }    
+               
+              if($_POST["datum_rodjenja"]===""){
+                $izraz->bindValue(":datum_rodjenja",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":datum_rodjenja",$_POST["datum_rodjenja"]);
+              }  
+              
+              if($_POST["oib"]===""){
+                $izraz->bindValue(":oib",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":oib",$_POST["oib"]);
+              }  
+              
+              if($_POST["napomena"]===""){
+                $izraz->bindValue(":napomena",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":napomena",$_POST["napomena"]);
+              }  
+
   unset($_POST["dodaj"]);
-  $izraz->execute($_POST);
+  $izraz->execute();
   header("location: index.php");
+  }
  
 }
 
@@ -32,15 +101,55 @@ if(isset($_POST["dodaj"])){
     
    
       <div class="floated-label-wrapper">
+      <?php if(!isset($greske["ime"])): ?>
         <label for="ime">Ime</label>
-        <input  autocomplete="off" type="text" id="ime" name="ime" placeholder="Ime">
+        <input  autocomplete="off" type="text" id="ime" name="ime" placeholder="Ime"
+        value="<?php echo isset($_POST["ime"]) ? $_POST["ime"] : "" ?>">
+
+      <?php else:?>
+      <label class="is-invalid-label">
+              Zahtjevani unos
+              <input type="text" 
+              value="<?php echo  $_POST["ime"]; ?>"
+              class="is-invalid-input" aria-describedby="nazivGreska" data-invalid="" 
+              aria-invalid="true" autocomplete="off" type="text" id="ime" name="ime" placeholder="Ime">
+              <span class="form-error is-visible" id="nazivGreska">
+              <?php echo $greske["ime"]; ?>
+              </span>
+              </label>
+
+              <?php endif;?> 
       </div>
       
 
         
       <div class="floated-label-wrapper">
+      <?php if(!isset($greske["prezime"])): ?>
         <label for="prezime">Prezime</label>
-        <input  autocomplete="off" type="text" id="prezime" name="prezime" placeholder="Prezime" >
+        <input  autocomplete="off" type="text" id="prezime" name="prezime" placeholder="Prezime" 
+        value="<?php echo isset($_POST["prezime"]) ? $_POST["prezime"] : "" ?>">
+
+      <?php else:?>
+
+       <label class="is-invalid-label">
+              Zahtjevani unos
+              <input type="text" 
+              value="<?php echo  $_POST["prezime"]; ?>"
+              class="is-invalid-input" aria-describedby="nazivGreska" data-invalid="" 
+              aria-invalid="true" autocomplete="off" type="text" id="prezime" name="prezime" placeholder="Prezime">
+              <span class="form-error is-visible" id="nazivGreska">
+              <?php echo $greske["prezime"]; ?>
+              </span>
+              </label>
+
+              <?php endif;?> 
+
+
+
+
+
+
+
       </div>
      
 

@@ -90,13 +90,13 @@ if(!isset($_SESSION[$idAPP."o"])){
     <tbody>
     <?php foreach($rezultati as $red):?>
       <tr>
-      <td data-label="Broj Šasije"><?php echo $red->broj_sasije; ?></td>
+      <td data-label="Broj Šasije"><?php echo $red->broj_sasije;?></td>
       <td data-label="Vlasnik"><?php echo $red->vlasnik; ?></td>
-      <td data-label="Datum prve reg."><?php echo date ("d.m.Y.",strtotime($red->datum_prve_registracije)); ?></td>
-      <td data-label="Registracija"><?php echo $red->registarska_oznaka; ?></td>
-      <td data-label="Marka"><?php echo $red->marka_vozila; ?></td>
-      <td data-label="Model"><?php echo $red->oznaka_modela; ?></td>
-      <td data-label="Napomena"><?php echo $red->napomena; ?></td>
+      <td data-label="Datum prve reg."><?php echo  ($red->datum_prve_registracije !=null) ? date ("d.m.Y.",strtotime($red->datum_prve_registracije)): "Nije definirano " ; ?></td>
+      <td data-label="Registracija"><?php echo  ($red->registarska_oznaka !=null) ? $red->registarska_oznaka : "Nije definirano " ; ?></td>
+      <td data-label="Marka"><?php echo  ($red->marka_vozila !=null) ?  $red->marka_vozila : "Nije definirano " ; ?></td>
+      <td data-label="Model"><?php echo   ($red->oznaka_modela !=null) ? $red->oznaka_modela: "Nije definirano " ; ?></td>
+      <td data-label="Napomena"><?php echo   ($red->napomena !=null) ? $red->napomena: "Nije definirano " ; ?></td>
       <td data-label="Akcija">
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 

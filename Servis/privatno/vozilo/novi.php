@@ -3,19 +3,81 @@ if(!isset($_SESSION[$idAPP."o"])){
   header("location: " . $putanjaAPP . "index.php");
 }
 
-
+$greske=Array();
 
 
 if(isset($_POST["dodaj"])){
+
+  if(trim($_POST["broj_sasije"])===""){
+    $greske["broj_sasije"]="Obavezno unos imena ";
+  }
+
+  if(strlen($_POST["broj_sasije"])>50){
+    $greske["broj_sasije"]="Broj šasije smije imati maksimalno 50 znakovam vi, ste stavili " . strlen($_POST["ime"]) . " znakova";
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  if(count($greske)===0){
+
   $izraz = $veza->prepare("insert into vozilo 
   (broj_sasije,vlasnik,datum_prve_registracije,registarska_oznaka,marka_vozila,oznaka_modela,napomena) 
   values
   (:broj_sasije,:vlasnik,:datum_prve_registracije,:registarska_oznaka,:marka_vozila,:oznaka_modela,:napomena)");
-            
-  unset($_POST["dodaj"]);
-  $izraz->execute($_POST);
+    
+  $izraz->bindParam(":broj_sasije",$_POST["broj_sasije"]);
+  $izraz->bindParam(":vlasnik",$_POST["vlasnik"]);
+
+  if($_POST["datum_prve_registracije"]==="0"){
+    $izraz->bindValue(":datum_prve_registracije",null,PDO::PARAM_INT);
+  }else{
+    $izraz->bindParam(":datum_prve_registracije",$_POST["datum_prve_registracije"]);
+  }
+
+  if($_POST["registarska_oznaka"]==="0"){
+    $izraz->bindValue(":registarska_oznaka",null,PDO::PARAM_INT);
+  }else{
+    $izraz->bindParam(":registarska_oznaka",$_POST["registarska_oznaka"]);
+  }
+
+  if($_POST["marka_vozila"]==="0"){
+    $izraz->bindValue(":marka_vozila",null,PDO::PARAM_INT);
+  }else{
+    $izraz->bindParam(":marka_vozila",$_POST["marka_vozila"]);
+  }
+
+  if($_POST["oznaka_modela"]==="0"){
+    $izraz->bindValue(":oznaka_modela",null,PDO::PARAM_INT);
+  }else{
+    $izraz->bindParam(":oznaka_modela",$_POST["oznaka_modela"]);
+  }
+
+  
+
+  if($_POST["napomena"]==="0"){
+    $izraz->bindValue(":napomena",null,PDO::PARAM_INT);
+  }else{
+    $izraz->bindParam(":napomena",$_POST["napomena"]);
+
+  }
+
+
+  
+  $izraz->execute();
   header("location: index.php");
- 
+  }
 }
 
 ?>
@@ -34,14 +96,39 @@ if(isset($_POST["dodaj"])){
     <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
 
 
+
+
      <div class="floated-label-wrapper">
+
+         <?php if(!isset($greske["broj_sasije"])): ?>
         <label for="broj_sasije">Broj šasije</label>
-        <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="broj_sasije" >
+        <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="broj_sasije" 
+        value="<?php echo isset($_POST["broj_sasije"]) ? $_POST["broj_sasije"] : "" ?>">
+     
+        <?php else:?>
+
+        <label class="is-invalid-label">
+              Zahtjevani unos
+              <input type="text" 
+              value="<?php echo  $_POST["broj_sasije"]; ?>"
+              class="is-invalid-input" aria-describedby="nazivGreska" data-invalid="" 
+              aria-invalid="true" autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije">
+              <span class="form-error is-visible" id="nazivGreska">
+              <?php echo $greske["broj_sasije"]; ?>
+              </span>
+              </label>
+
+              <?php endif;?> 
+
+
+     
       </div>
 
       
+
       
       
+      <div class="floated-label-wrapper">
       <label for="vlasnika">Vlasnik</label>
             <select id="vlasnik" name="vlasnik">
               <option value="0">Odaberi vlasnika</option>  
@@ -57,11 +144,18 @@ if(isset($_POST["dodaj"])){
               $izraz->execute();
               $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
                foreach($rezultati as $red):?>
-             <option value="<?php echo $red->sifra ?>"><?php echo $red->vlasnik ?></option>  
+             <option 
+             <?php 
+             if(isset($_POST["vlasnik"]) && $_POST["vlasnik"]==$red->sifra){
+               echo ' selected="selected" ';
+             }
+             ?>
+             value="<?php echo $red->sifra ?>"><?php echo $red->vlasnik ?></option>  
             <?php endforeach;?>
               
               ?>
             </select>
+            </div>
 
       <div class="floated-label-wrapper">
         <label for="datum_prve_registracije">Datum prve registracije</label>

@@ -64,7 +64,8 @@
     <?php foreach($rezultati as $red):?>
       <tr>
         <td data-label="Naziv"><?php echo $red->naziv; ?></td>
-        <td data-label="Datum osnutka"><?php echo date ("d.m.Y.",strtotime($red->datum_osnutka)); ?></td>
+        <td data-label="Datum osnutka"><?php echo ($red->datum_osnutka!=null) ? date("d.m.Y.",strtotime($red->datum_osnutka)) : "Nije definirano "; ?></td>
+        
         <td data-label="Akcija">
           <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 

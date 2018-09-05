@@ -3,12 +3,45 @@ if(!isset($_SESSION[$idAPP."o"])){
   header("location: " . $putanjaAPP . "index.php");
 }
 
+$greske=Array();
+
 if(isset($_POST["dodaj"])){
-  $izraz = $veza->prepare("insert into radionica (naziv,datum_osnutka) values 
-                          (:naziv,:datum_osnutka)");
-  unset($_POST["dodaj"]);
-  $izraz->execute($_POST);
-  header("location: index.php");
+
+  if(trim($_POST["naziv"])===""){
+    $greske["naziv"]="Obavezno unos naziva radionice";
+  }
+ 
+  if(strlen($_POST["naziv"])>50){
+    $greske["naziv"]="Naziv smije imati maksimalno 50 znakovam vi, ste stavili " . strlen($_POST["naziv"]) . " znakova";
+  }
+
+  if(!empty($_POST["datumpocetka"])){
+    $dateTime = DateTime::createFromFormat('Y-m-d', $_POST["datumpocetka"]);
+    if(!$dateTime){
+      $greske["datumpocetka"]="Datum nije u dobrom formatu, molimo unijeti dd.MM.yyyy. (npr. za danas " . date("d.m.Y.") . ")";
+    }
+  }
+
+  
+
+  if(count($greske)===0){
+    $izraz = $veza->prepare("insert into radionica (naziv,datum_osnutka) values 
+                              (:naziv,:datum_osnutka)");
+                              $izraz->bindParam(":naziv",$_POST["naziv"]);
+
+
+                              if($_POST["datum_osnutka"]===""){
+                                $izraz->bindValue(":datum_osnutka",null,PDO::PARAM_INT);
+                              }else{
+                                $izraz->bindParam(":datum_osnutka",$_POST["datum_osnutka"]);
+                              }
+
+
+
+      
+      $izraz->execute();
+      header("location: index.php");
+      }
  
 }
 
@@ -28,14 +61,47 @@ if(isset($_POST["dodaj"])){
   <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
     
     <div class="floated-label-wrapper">
+     
+    <?php if(!isset($greske["naziv"])): ?>
+
       <label for="naziv">Naziv</label>
-      <input autocomplete="off" type="text" id="naziv" name="naziv" placeholder="Ime radionice">
-    
+      <input autocomplete="off" type="text" id="naziv" name="naziv" placeholder="Ime radionice"
+      value="<?php echo isset($_POST["naziv"]) ? $_POST["naziv"] : "" ?>">
+     
+     
+     <?php else:?>
+
+     <label class="is-invalid-label">
+              Obavezni unos
+              <input type="text" 
+              value="<?php echo  $_POST["naziv"]; ?>"
+              class="is-invalid-input" aria-describedby="nazivGreska" data-invalid="" 
+              aria-invalid="true" autocomplete="off" type="text" id="naziv" name="naziv" placeholder="Ime radionice">
+              <span class="form-error is-visible" id="nazivGreska">
+              <?php echo $greske["naziv"]; ?>
+              </span>
+              </label>
+
+
+
+
+    <?php endif;?> 
+    </div>
     
     <div class="floated-label-wrapper">
-      <label for="datum_osnutka">Datum_osnutka</label>
-      <input autocomplete="off" type="date" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka">
+      <label 
+            for="datum_osnutka">Datum_osnutka</label>
+      <input 
+      
+      value="<?php echo isset($_POST["datum_osnutka"]) ? $_POST["datum_osnutka"] : "" ?>"
+      autocomplete="off" type="date" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka">
+      
+           
+
     </div>
+
+
+
     
     <div class="grid-x">
             <div class="cell large-1"></div>

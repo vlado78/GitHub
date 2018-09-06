@@ -77,7 +77,14 @@ if(isset($_POST["promjeni"])){
 
     <div class="floated-label-wrapper">
       <label for="datum_rodjenja">Datum rođenja</label>
-      <input value="<?php echo $o->datum_rodjenja ?>" autocomplete="off" type="date" id="datum_rodjenja" name="datum_rodjenja" placeholder="Datum rođenja" >
+      <?php 
+            $_POST=(array)$o; 
+            if(strlen($_POST["datum_rodjenja"])>0){
+              $_POST["datum_rodjenja"] = date("Y-m-d",strtotime($_POST["datum_rodjenja"]));
+            
+            }
+            ?>
+      <input value="<?php echo $_POST["datum_rodjenja"] ?>" autocomplete="off" type="date" id="datum_rodjenja" name="datum_rodjenja" placeholder="Datum rođenja" >
     </div>
 
     <div class="floated-label-wrapper">

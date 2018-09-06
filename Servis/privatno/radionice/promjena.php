@@ -25,7 +25,8 @@ if(isset($_POST["promjeni"])){
   $izraz = $veza->prepare("select * from radionica where sifra=:sifra");
   $izraz->execute($_GET);
   $o=$izraz->fetch(PDO::FETCH_OBJ);
-  
+
+ 
     
     
   }
@@ -50,6 +51,11 @@ if(isset($_POST["promjeni"])){
     <?php include_once "../../predlozak/zaglavlje.php" ?>
     <?php include_once "../../predlozak/navbar.php" ?>
     <h3>Promijeni radionicu</h3>
+    
+
+    
+
+
       <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
         
         <div class="floated-label-wrapper">
@@ -59,9 +65,16 @@ if(isset($_POST["promjeni"])){
         
         <div class="floated-label-wrapper">
           <label for="datum_osnutka">Datum osnutka</label>
-          <input value="<?php echo   (  DateTime::createFromFormat('Y-m-d', $o->datum_osnutka) ) ?>" type="date" autocomplete="off" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka" >
+          <?php 
+            $_POST=(array)$o; 
+            if(strlen($_POST["datum_osnutka"])>0){
+              $_POST["datum_osnutka"] = date("Y-m-d",strtotime($_POST["datum_osnutka"]));
+            
+            }
+            ?>
+          <input value="<?php echo $_POST["datum_osnutka"]  ?>" type="date" autocomplete="off" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka" >
         </div>
-
+ 
         
         
         <input type="hidden" name="sifra" value="<?php echo $o->sifra ?>" />

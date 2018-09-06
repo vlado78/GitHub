@@ -98,7 +98,14 @@ if(isset($_POST["promjeni"])){
 
     <div class="floated-label-wrapper">
       <label for="datum_prve_registracije">Datum prve registracije</label>
-      <input value="<?php echo $o->datdatum_prve_registracijeum_rodjenja ?>" autocomplete="off" type="date" id="datum_prve_registracije" name="datum_prve_registracije" placeholder="Datum prve registracije" >
+      <?php 
+            $_POST=(array)$o; 
+            if(strlen($_POST["datum_prve_registracije"])>0){
+              $_POST["datum_prve_registracije"] = date("Y-m-d",strtotime($_POST["datum_prve_registracije"]));
+            
+            }
+            ?>
+      <input value="<?php echo  $_POST["datum_prve_registracije"] ?>" autocomplete="off" type="date" id="datum_prve_registracije" name="datum_prve_registracije" placeholder="Datum prve registracije" >
     </div>
     
 

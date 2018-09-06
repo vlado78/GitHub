@@ -56,6 +56,7 @@
             stavkaIzbornika($putanjaAPP,"privatno/vlasnik/index.php","Vlasnik");
             stavkaIzbornika($putanjaAPP,"privatno/vozilo/index.php","Vozilo");
             stavkaIzbornika($putanjaAPP,"privatno/radni nalog/index.php","Radni nalog");
+            stavkaIzbornika($putanjaAPP,"privatno/zaposlenik/index.php","Zaposlenici");
             ?>
             
             </ul>

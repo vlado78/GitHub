@@ -8,6 +8,7 @@ if(!isset($_GET["sifra"]) && !isset($_POST["sifra"])){
 }
 
 if(isset($_POST["promjeni"])){
+    
   $izraz = $veza->prepare("update vozilo set 
               broj_sasije=:broj_sasije, 
               vlasnik=:vlasnik, 
@@ -23,11 +24,12 @@ if(isset($_POST["promjeni"])){
   header("location: index.php");
 }else{
   $izraz = $veza->prepare("
+
  
 
   select a.sifra,
   a.broj_sasije , 
- concat (b.ime,' ', b.prezime) as vlasnik  ,
+  concat (b.ime,' ', b.prezime) as vlasnik,
   a.datum_prve_registracije ,
   a.registarska_oznaka ,
   a.marka_vozila  ,

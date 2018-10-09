@@ -7,7 +7,14 @@ if(!isset($_GET["sifra"]) && !isset($_POST["sifra"])){
   header("location: " . $putanjaAPP . "index.php");
 }
 
+$greske=Array();
+
 if(isset($_POST["promjeni"])){
+
+  include_once "kontrola.php";
+
+  if(count($greske)===0){
+
   $izraz = $veza->prepare("update vlasnik set 
               ime=:ime, 
               prezime=:prezime, 
@@ -19,14 +26,65 @@ if(isset($_POST["promjeni"])){
               oib=:oib, 
               napomena=:napomena
               where sifra=:sifra;");
+
+              $izraz->bindParam(":sifra",$_POST["sifra"]);
+              $izraz->bindParam(":ime",$_POST["ime"]);
+              $izraz->bindParam(":prezime",$_POST["prezime"]);
+
+              if($_POST["ulica_i_broj"]==="0"){
+                $izraz->bindValue(":ulica_i_broj",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":ulica_i_broj",$_POST["ulica_i_broj"]);
+              }
+
+              if($_POST["mjesto"]==="0"){
+                $izraz->bindValue(":mjesto",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":mjesto",$_POST["mjesto"]);
+              }
+
+              if($_POST["broj_mobitela"]==="0"){
+                $izraz->bindValue(":broj_mobitela",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":broj_mobitela",$_POST["broj_mobitela"]);
+              }
+
+              if($_POST["email"]==="0"){
+                $izraz->bindValue(":email",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":email",$_POST["email"]);
+              }
+
+              if($_POST["datum_rodjenja"]== ""){
+                $izraz->bindValue(":datum_rodjenja",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":datum_rodjenja",$_POST["datum_rodjenja"]);
+              }
+
+              if($_POST["oib"]==="0"){
+                $izraz->bindValue(":oib",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":oib",$_POST["oib"]);
+              }
+
+              if($_POST["napomena"]==="0"){
+                $izraz->bindValue(":napomena",null,PDO::PARAM_INT);
+              }else{
+                $izraz->bindParam(":napomena",$_POST["napomena"]);
+              }
               
-  unset($_POST["promjeni"]);
-  $izraz->execute($_POST);
+ 
+  $izraz->execute();
   header("location: index.php");
-}else{
-  $izraz = $veza->prepare("select * from vlasnik where sifra=:sifra");
-  $izraz->execute($_GET);
-  $o=$izraz->fetch(PDO::FETCH_OBJ);
+}
+
+}
+
+else{
+
+    $izraz = $veza->prepare("select * from vlasnik where sifra=:sifra");
+    $izraz->execute($_GET);
+    $_POST=$izraz->fetch(PDO::FETCH_ASSOC);
 }
 ?>
 
@@ -41,75 +99,24 @@ if(isset($_POST["promjeni"])){
   <?php include_once "../../predlozak/zaglavlje.php" ?>
   <?php include_once "../../predlozak/navbar.php" ?>
   <h3>Promijeni vlasnika</h3>
-  <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
+  <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" 
+  method="post">
+  
+  
+  <?php include_once "osnovniPodaci.php" ?>
     
-    <div class="floated-label-wrapper">
-      <label for="ime">Ime</label>
-      <input value="<?php echo $o->ime ?>" autocomplete="off" type="text" id="ime" name="ime" placeholder="Ime">
-    </div>
-    
-    <div class="floated-label-wrapper">
-      <label for="prezime">Prezime</label>
-      <input value="<?php echo $o->prezime ?>" autocomplete="off" type="text" id="prezime" name="prezime" placeholder="Prezime" >
-    </div>
-
-    <div class="floated-label-wrapper">
-      <label for="ulica_i_broj">Ulica i broj</label>
-      <input value="<?php echo $o->ulica_i_broj ?>" autocomplete="off" type="text" id="ulica_i_broj" name="ulica_i_broj" placeholder="Ulica i broj" >
-    </div>
-
-    <div class="floated-label-wrapper">
-      <label for="mjesto">Mjesto</label>
-      <input value="<?php echo $o->mjesto ?>" autocomplete="off" type="text" id="mjesto" name="mjesto" placeholder="Mjesto" >
-    </div>
-
-    
-
-    <div class="floated-label-wrapper">
-      <label for="broj_mobitela">Broj mobitela</label>
-      <input value="<?php echo $o->broj_mobitela ?>" autocomplete="off" type="text" id="broj_mobitela" name="broj_mobitela" placeholder="Broj mobitela" >
-    </div>
-
-    <div class="floated-label-wrapper">
-      <label for="email">Email</label>
-      <input value="<?php echo $o->email ?>" autocomplete="off" type="text" id="email" name="email" placeholder="Email" >
-    </div>
-
-    <div class="floated-label-wrapper">
-      <label for="datum_rodjenja">Datum rođenja</label>
-      <?php 
-            $_POST=(array)$o; 
-            if(strlen($_POST["datum_rodjenja"])>0){
-              $_POST["datum_rodjenja"] = date("Y-m-d",strtotime($_POST["datum_rodjenja"]));
-            
-            }
-            ?>
-      <input value="<?php echo $_POST["datum_rodjenja"] ?>" autocomplete="off" type="date" id="datum_rodjenja" name="datum_rodjenja" placeholder="Datum rođenja" >
-    </div>
-
-    <div class="floated-label-wrapper">
-      <label for="oib">Oib</label>
-      <input value="<?php echo $o->oib ?>" autocomplete="off" id="oib" type="text" name="oib" placeholder="Oib" >
-    </div>
-
-    <div class="floated-label-wrapper">
-      <label for="napomena">Napomena</label>
-      <textarea  autocomplete="off" id="napomena" name="napomena" placeholder="Napomena" > <?php echo $o->napomena ?></textarea>
-       
-    </div>
-
-
-    
-    <input type="hidden" name="sifra" value="<?php echo $o->sifra ?>" />
-
  <div class="grid-x">
             <div class="cell large-1"></div>
+
             <div class="cell large-4">
               <a href="index.php" class="alert button expanded">Nazad</a>
             </div>
+
             <div class="cell large-2"></div>
+            
             <div class="cell large-4">
-            <input class="button expanded" type="submit" name="promjeni" value="Promjeni">
+            <input type="hidden" name="sifra" value="<?php echo $_POST["sifra"] ?>">
+              <input class="button expanded" type="submit" name="promjeni" value="Promjeni">
             </div>
           </div>    
 

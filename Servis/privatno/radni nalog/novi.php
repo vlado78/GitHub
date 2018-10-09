@@ -3,17 +3,56 @@ if(!isset($_SESSION[$idAPP."o"])){
   header("location: " . $putanjaAPP . "index.php");
 }
 
-
+$greske=Array();
 
 if(isset($_POST["dodaj"])){
-  $izraz = $veza->prepare("insert into radni_nalog 
-  (radionica,zaposlenik,vozilo,kilometraza,opis_kvara,datum_pocetka,datum_zavrsetka,napomena) 
-  values
-  (:radionica,:zaposlenik,:vozilo,:kilometraza,:opis_kvara,:datum_pocetka,datum_zavrsetka,:napomena)");
-            
-  unset($_POST["dodaj"]);
-  $izraz->execute($_POST);
-  header("location: index.php");
+
+ include_once "kontrola.php";
+  
+
+  if(count($greske)===0){
+    $izraz = $veza->prepare("insert into radni_nalog
+                               (radionica,zaposlenik,vozilo,kilometraza,opis_kvara,datum_pocetka,datum_zavrsetka,napomena) values 
+                               (:radionica,:zaposlenik,:vozilo,:kilometraza,:opis_kvara,:datum_pocetka,:datum_zavrsetka,:napomena)");
+
+                              $izraz->bindParam(":radionica",$_POST["radionica"]);
+                              $izraz->bindParam(":zaposlenik",$_POST["zaposlenik"]);
+                              $izraz->bindParam(":vozilo",$_POST["vozilo"]);
+
+                              if($_POST["kilometraza"]===""){
+                                $izraz->bindValue(":kilometraza",null,PDO::PARAM_INT);
+                              }else{
+                                $izraz->bindParam(":kilometraza",$_POST["kilometraza"]);
+                              }
+
+                              if($_POST["opis_kvara"]===""){
+                                $izraz->bindValue(":opis_kvara",null,PDO::PARAM_INT);
+                              }else{
+                                $izraz->bindParam(":opis_kvara",$_POST["opis_kvara"]);
+                              }
+
+                              if($_POST["datum_pocetka"]===""){
+                                $izraz->bindValue(":datum_pocetka",null,PDO::PARAM_INT);
+                              }else{
+                                $izraz->bindParam(":datum_pocetka",$_POST["datum_pocetka"]);
+                              }
+
+                              if($_POST["datum_zavrsetka"]===""){
+                                $izraz->bindValue(":datum_zavrsetka",null,PDO::PARAM_INT);
+                              }else{
+                                $izraz->bindParam(":datum_zavrsetka",$_POST["datum_zavrsetka"]);
+                              }
+
+                              if($_POST["napomena"]===""){
+                                $izraz->bindValue(":napomena",null,PDO::PARAM_INT);
+                              }else{
+                                $izraz->bindParam(":napomena",$_POST["napomena"]);
+                              }
+
+
+      $izraz->execute();
+      header("location: index.php");
+      }
  
 }
 
@@ -29,67 +68,140 @@ if(isset($_POST["dodaj"])){
    <?php include_once "../../predlozak/zaglavlje.php" ?>
     <?php include_once "../../predlozak/navbar.php" ?>
 
-   <h3>Novo vozilo</h3>
+   <h3>Novi radni nalog</h3>
     <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
 
 
-      <div class="floated-label-wrapper">
+ <div class="floated-label-wrapper">
+    <?php if(!isset($greske["radionica"])): ?>
 
-         <label for="radionica">Radionica</label>
-            <select id="radionica" name="radionica">
-              <option value="0">Odaberite radionice</option>  
+        <label for="radionica">Radionica</label>
+              <select id="radionica" name="radionica">
+                <option value="">Odaberi radionicu</option>
+                <?php 
+                
+                $izraz = $veza->prepare("
+                                select sifra, naziv from radionica
+                        ");
+                $izraz->execute();
+                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                foreach($rezultati as $red):?>
+              <option 
               <?php 
-              
-              $izraz = $veza->prepare("
-              
-              select * from radionica
-
-
-              ");
-              $izraz->execute();
-              $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
-               foreach($rezultati as $red):?>
-             <option value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>  
-            <?php endforeach;?>
-              
+              if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                echo ' selected="selected" ';
+              }
               ?>
-            </select>
+              value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>  
+              <?php endforeach;?>
 
+              </select>
 
+    <?php else:?>
 
+            <label class="is-invalid-label">
+                Zahtjevani unos
+                <select  class="is-invalid-input" style="color: #cc4b37; font-weight: bold" aria-describedby="nazivGreska" data-invalid=""
+                          id="radionica" name="radionica"
+                        aria-invalid="true">
+                    <option value="">Odaberi radionicu</option>
+                    <?php
+
+                    $izraz = $veza->prepare("
+                            select sifra, naziv from radionica
+                                    ");
+                    $izraz->execute();
+                    $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                    foreach($rezultati as $red):?>
+                        <option
+                            <?php
+                            if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                                echo ' selected="selected" ';
+                            }
+                            ?>
+                                value="<?php echo $red->sifra ?>"><?php echo $red->radionica ?></option>
+                    <?php endforeach;?>
+
+                </select>
+
+                <span class="form-error is-visible" id="nazivGreska">
+                <?php echo $greske["radionica"]; ?>
+                </span>
+            </label>
+    <?php endif;?>
 
       </div>
-      
-      <div class="floated-label-wrapper">
-
-<label for="zaposlenik">Zaposlenik</label>
-   <select id="zaposlenik" name="zaposlenik">
-     <option value="0">Odaberite zaposlenika</option>  
-     <?php 
-     // ako bude izabrana mehanika pokazati samo zaposlenike iz mehanike
-     $izraz = $veza->prepare("
-     
-     select concat(ime,' ',prezime) as zaposlenik from zaposlenik where radionica=1 
-
-
-     ");
-     $izraz->execute();
-     $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
-      foreach($rezultati as $red):?>
-    <option value="<?php echo $red->sifra ?>"><?php echo $red->zaposlenik ?></option>  
-   <?php endforeach;?>
-     
-     ?>
-   </select>
 
 
 
 
-</div>
-      
+
+       <div class="floated-label-wrapper">
+    <?php if(!isset($greske["zaposlenik"])): ?>
+
+        <label for="zaposlenik">Zaposlnik</label>
+              <select id="zaposlenik" name="zaposlenik">
+                <option value="">Odaberi zaposlenika</option>
+                <?php 
+                
+                $izraz = $veza->prepare("
+                                select sifra, concat (ime,prezime) as zaposlenik from zaposlenik
+                        ");
+                $izraz->execute();
+                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                foreach($rezultati as $red):?>
+              <option 
+              <?php 
+              if(isset($_POST["zaposlenik"]) && $_POST["zaposlenik"]==$red->sifra){
+                echo ' selected="selected" ';
+              }
+              ?>
+              value="<?php echo $red->sifra ?>"><?php echo $red->zaposlenik ?></option>  
+              <?php endforeach;?>
+
+              </select>
+
+    <?php else:?>
+
+            <label class="is-invalid-label">
+                Zahtjevani unos
+                <select  class="is-invalid-input" style="color: #cc4b37; font-weight: bold" aria-describedby="nazivGreska" data-invalid=""
+                          id="zaposlenik" name="zaposlenik"
+                        aria-invalid="true">
+                    <option value="">Odaberi zaposlenika</option>
+                    <?php
+
+                    $izraz = $veza->prepare("
+                    select sifra, concat (ime,prezime) as zaposlenik from zaposlenik
+                                    ");
+                    $izraz->execute();
+                    $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                    foreach($rezultati as $red):?>
+                        <option
+                            <?php
+                            if(isset($_POST["zaposlenik"]) && $_POST["zaposlenik"]==$red->sifra){
+                                echo ' selected="selected" ';
+                            }
+                            ?>
+                                value="<?php echo $red->sifra ?>"><?php echo $red->zaposlenik ?></option>
+                    <?php endforeach;?>
+
+                </select>
+
+                <span class="form-error is-visible" id="nazivGreska">
+                <?php echo $greske["zaposlenik"]; ?>
+                </span>
+            </label>
+    <?php endif;?>
+
+      </div>
+
+
+  
+<div class="floated-label-wrapper">     
 <label for="vozilo">Vozilo</label>
    <select id="vozilo" name="vozilo">
-     <option value="0">Odaberite Vozilo</option>  
+     <option value="0">Odaberite vozilo</option>  
      <?php 
      
      $izraz = $veza->prepare("
@@ -105,6 +217,8 @@ if(isset($_POST["dodaj"])){
      
      ?>
    </select>
+   </div>
+
 
       <div class="floated-label-wrapper">
         <label for="kilometraza">Kilometaža</label>
@@ -122,8 +236,8 @@ if(isset($_POST["dodaj"])){
       </div>
 
       <div class="floated-label-wrapper">
-        <label fora,datum_zavrsetka">Datum kraja</label>
-        <input  autocomplete="off"  type="date" ida,datum_zavrsetka" namea,datum_zavrsetka" placeholder="Datum kraja" >
+        <label for=datum_zavrsetka">Datum kraja</label>
+        <input  autocomplete="off"  type="date" id="datum_zavrsetka" name="datum_zavrsetka" placeholder="Datum kraja" >
       </div>
 
       

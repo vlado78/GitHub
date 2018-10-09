@@ -49,7 +49,7 @@
           <ul class="menu simple vertical medium-horizontal">
           <li><a href="https://github.com/vlado78/GitHub/tree/master/Servis" target="_blank">GitHub</a></li> 
             <?php
-            //stavkaIzbornika($putanjaAPP,"privatno/nadzornaPloca.php","Nadzorna ploča");
+            stavkaIzbornika($putanjaAPP,"privatno/nadzornaPloca.php","Nadzorna ploča");
             //stavkaIzbornika($putanjaAPP,"privatno/PDO.php","PDO");
             stavkaIzbornika($putanjaAPP,"privatno/eraDiagram.php","ERA diagram");
             stavkaIzbornika($putanjaAPP,"privatno/radionice/index.php","Radionice");

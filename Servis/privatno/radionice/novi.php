@@ -7,27 +7,14 @@ $greske=Array();
 
 if(isset($_POST["dodaj"])){
 
-  if(trim($_POST["naziv"])===""){
-    $greske["naziv"]="Obavezno unos naziva radionice";
-  }
- 
-  if(strlen($_POST["naziv"])>50){
-    $greske["naziv"]="Naziv smije imati maksimalno 50 znakovam vi, ste stavili " . strlen($_POST["naziv"]) . " znakova";
-  }
-
-  if(!empty($_POST["datumpocetka"])){
-    $dateTime = DateTime::createFromFormat('Y-m-d', $_POST["datumpocetka"]);
-    if(!$dateTime){
-      $greske["datumpocetka"]="Datum nije u dobrom formatu, molimo unijeti dd.MM.yyyy. (npr. za danas " . date("d.m.Y.") . ")";
-    }
-  }
-
+ include_once "kontrola.php";
   
 
   if(count($greske)===0){
     $izraz = $veza->prepare("insert into radionica (naziv,datum_osnutka) values 
                               (:naziv,:datum_osnutka)");
                               $izraz->bindParam(":naziv",$_POST["naziv"]);
+                              
 
 
                               if($_POST["datum_osnutka"]===""){
@@ -38,7 +25,9 @@ if(isset($_POST["dodaj"])){
 
 
 
-      
+
+
+
       $izraz->execute();
       header("location: index.php");
       }
@@ -87,6 +76,11 @@ if(isset($_POST["dodaj"])){
 
     <?php endif;?> 
     </div>
+    <div class="floated-label-wrapper">
+  
+
+    
+     
     
     <div class="floated-label-wrapper">
       <label 
@@ -94,7 +88,7 @@ if(isset($_POST["dodaj"])){
       <input 
       
       value="<?php echo isset($_POST["datum_osnutka"]) ? $_POST["datum_osnutka"] : "" ?>"
-      autocomplete="off" type="date" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka">
+              autocomplete="off" type="date" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka">
       
            
 

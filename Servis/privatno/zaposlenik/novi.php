@@ -12,8 +12,8 @@ if(isset($_POST["dodaj"])){
   if(count($greske)===0){
 
 
-  $izraz = $veza->prepare("insert into vlasnik (ime,prezime,ulica_i_broj,mjesto,broj_mobitela,email,datum_rodjenja,oib,napomena) values
-              (:ime,:prezime,:ulica_i_broj,:mjesto,:broj_mobitela,:email,:datum_rodjenja,:oib,:napomena)");
+  $izraz = $veza->prepare("insert into zaposlenik (ime,prezime,ulica_i_broj,mjesto,broj_mobitela,email,datum_rodjenja,datum_pocetka_rada,oib,broj_ugovora,radionica,radni_nalog,napomena) values
+               (:ime,:prezime,:ulica_i_broj,:mjesto,:broj_mobitela,:email,:datum_rodjenja,:datum_pocetka_rada,:oib,:broj_ugovora,:radionica,:radni_nalog,:napomena)");
    
               $izraz->bindParam(":ime",$_POST["ime"]);
               $izraz->bindParam(":prezime",$_POST["prezime"]);
@@ -46,14 +46,36 @@ if(isset($_POST["dodaj"])){
                 $izraz->bindValue(":datum_rodjenja",null,PDO::PARAM_INT);
               }else{
                 $izraz->bindParam(":datum_rodjenja",$_POST["datum_rodjenja"]);
-              }  
-              
-              if($_POST["oib"]===""){
-                $izraz->bindValue(":oib",null,PDO::PARAM_INT);
+              }
+
+              if($_POST["datum_pocetka_rada"]===""){
+                  $izraz->bindValue(":datum_pocetka_rada",null,PDO::PARAM_INT);
               }else{
-                $izraz->bindParam(":oib",$_POST["oib"]);
-              }  
+                  $izraz->bindParam(":datum_pocetka_rada",$_POST["datum_pocetka_rada"]);
+              }
+              if($_POST["oib"]===""){
+                  $izraz->bindValue(":oib",null,PDO::PARAM_INT);
+              }else{
+                  $izraz->bindParam(":oib",$_POST["oib"]);
+              }
+
+              if($_POST["broj_ugovora"]===""){
+                  $izraz->bindValue(":broj_ugovora",null,PDO::PARAM_INT);
+              }else{
+                  $izraz->bindParam(":broj_ugovora",$_POST["broj_ugovora"]);
+              }
+
+              if($_POST["radionica"]===""){
+                  $izraz->bindValue(":radionica",null,PDO::PARAM_INT);
+              }else{
+                  $izraz->bindParam(":radionica",$_POST["radionica"]);
+              }
+
               
+                  $izraz->bindValue(":radni_nalog",null,PDO::PARAM_INT);
+             
+            
+
               if($_POST["napomena"]===""){
                 $izraz->bindValue(":napomena",null,PDO::PARAM_INT);
               }else{
@@ -79,7 +101,7 @@ if(isset($_POST["dodaj"])){
    <?php include_once "../../predlozak/zaglavlje.php" ?>
     <?php include_once "../../predlozak/navbar.php" ?>
 
-   <h3>Novi vlasnik</h3>
+   <h3>Novi zaposlenik</h3>
     <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
 
 
@@ -159,9 +181,51 @@ if(isset($_POST["dodaj"])){
         </div>
 
         <div class="floated-label-wrapper">
+            <label for="datum_pocetka_rada">Datum početka rada</label>
+            <input  autocomplete="off" type="date"  id="datum_pocetka_rada" name="datum_pocetka_rada" placeholder="Datum početka rada"  value="<?php  echo isset($_POST["datum_pocetka_rada"]) ?    $_POST["datum_pocetka_rada"]  : "" ;  ?>">
+
+         </div>
+
+        <div class="floated-label-wrapper">
             <label for="oib">Oib</label>
             <input   autocomplete="off" type="text" id="oib" name="oib" placeholder="Oib"  value="<?php echo isset($_POST["oib"]) ?  $_POST["oib"]: ""; ?>">
         </div>
+
+        <div class="floated-label-wrapper">
+            <label for="broj_ugovora">Broj ugovora</label>
+            <input   autocomplete="off" type="text" id="broj_ugovora" name="broj_ugovora" placeholder="Broj ugovora"  value="<?php echo isset($_POST["broj_ugovora"]) ?  $_POST["broj_ugovora"]: ""; ?>">
+        </div>
+
+        <div class="floated-label-wrapper">
+            <label for="radionica">Radionica</label>
+            <select id="radionica" name="radionica">
+                <option value="">Odaberi radionicu</option>
+                <?php
+
+                $izraz = $veza->prepare("
+              
+              select sifra, naziv
+              from radionica
+              
+
+
+              ");
+                $izraz->execute();
+                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                foreach($rezultati as $red):?>
+
+                    <option
+                        <?php
+                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                            echo ' selected="selected" ';
+                        }
+                        ?>
+                            value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>
+                <?php endforeach;?>
+            </select>
+        </div>
+
+       
 
         <div class="floated-label-wrapper">
             <label for="napomena">Napomena</label>

@@ -5,13 +5,15 @@ create database autoservis default character set utf8;
 # za byethost
 #alter database b17_21947030_autoservis default character set utf8;
 #sipavanje
-#c:\xampp\mysql\bin\mysql -uedunova -pedunova --default_character_set=utf8 < C:\xampp\htdocs\Servis\autoservis.sql
+#c:\xampp\mysql\bin\mysql -uedunova -pedunova --default_character_set=utf8 < C:\xampp\htdocs\Servis\mojMaliServis.sql
 
-use b17_21947030_autoservis;
+
+use autoservis;
 
 create table radionica(
 sifra int primary key not null auto_increment,
 naziv varchar (20),
+nadredjeni int,
 datum_osnutka datetime
 
 );
@@ -25,10 +27,9 @@ mjesto varchar (20) ,
 broj_mobitela varchar(20) ,
 email varchar (20) ,
 datum_rodjenja datetime ,
-datum_pocetka_rada datetime not null ,
+datum_pocetka_rada datetime  ,
 oib varchar (11) ,
-broj_ugovora varchar(20) not null,
-nadredjeni int ,
+broj_ugovora varchar(20) ,
 radionica int ,
 radni_nalog int,
 napomena varchar (200)
@@ -91,14 +92,14 @@ alter table zaposlenik_radni_nalog add foreign key (radni_nalog) references radn
 
 alter table vozilo add foreign key (vlasnik) references vlasnik(sifra);
 
-alter table zaposlenik add foreign key (nadredjeni) references zaposlenik(sifra);
 
 
 
-insert into radionica (sifra,naziv,datum_osnutka) values
-(null,'mehanika','2008-04-16'),
-(null,'elektrika','2008-04-16'),
-(null,'limarija','2008-04-16');
+
+insert into radionica (sifra,naziv,datum_osnutka,nadredjeni) values
+(null,'mehanika','2008-04-16',1),
+(null,'elektrika','2008-04-16',2),
+(null,'limarija','2008-04-16',3);
 
 insert into zaposlenik (sifra,ime,prezime,ulica_i_broj,mjesto,broj_mobitela,email,datum_rodjenja,datum_pocetka_rada,oib,broj_ugovora) values
 (null,'Ivica','Ivić','Jadranska ulica 5','Vinkovci','098111111','ivicaivic@gmail.com','1964-5-25','2008-04-16','12345678901','1'),
@@ -136,12 +137,12 @@ insert into vozilo (sifra,broj_sasije,vlasnik,datum_prve_registracije,registarsk
 (null,'WZZZW123555KOL','9','2011-05-05','GHJ222G','FERRARI','LA FERRARI');
 
 
-update zaposlenik set nadredjeni=1, radionica=1 where sifra=4;
-update zaposlenik set nadredjeni=1, radionica=1 where sifra=5;
-update zaposlenik set nadredjeni=2, radionica=2 where sifra=6;
-update zaposlenik set nadredjeni=2, radionica=2 where sifra=7;
-update zaposlenik set nadredjeni=3, radionica=3 where sifra=8;
-update zaposlenik set nadredjeni=3, radionica=3 where sifra=9;
+update zaposlenik set  radionica=1 where sifra=4;
+update zaposlenik set  radionica=1 where sifra=5;
+update zaposlenik set  radionica=2 where sifra=6;
+update zaposlenik set  radionica=2 where sifra=7;
+update zaposlenik set  radionica=3 where sifra=8;
+update zaposlenik set  radionica=3 where sifra=9;
 
 update zaposlenik set radionica=1 where sifra=1;
 update zaposlenik set radionica=2 where sifra=2;

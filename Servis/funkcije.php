@@ -12,55 +12,62 @@ function stavkaIzbornika($putanjaAPP, $stranica, $labela){
   <?php
 }
 
-function provjeri_OIB($oib){
-  if(strlen($oib) == 11){
-      if(is_numeric($oib)){
-          $a = 10;
-          for($i = 0; $i < 10; $i++){
-              $a = $a + intval(substr($oib, $i, 1), 10);
-              $a = $a % 10;
-              if($a == 0){$a = 10;}
-              $a *= 2;
-              $a = $a % 11;
-          }
-          $control = 11 - $a;
-          if($control == 10){$control = 0;}
-          return $control == intval(substr($oib, 10, 1), 10);
-      }else{
-          return FALSE;
-      }
-  }else{
-      return FALSE;   
+
+function dohvatiOIB(){
+    error_reporting(E_ERROR | E_PARSE);
+   // Create a new cURL resource
+   $curl = curl_init(); 
+  
+   if (!$curl) {
+       die("Couldn't initialize a cURL handle"); 
+   }
+  
+   // Set the file URL to fetch through cURL
+   curl_setopt($curl, CURLOPT_URL, "http://oib.itcentrala.com/oib-generator/");
+  
+   // Set a different user agent string (Googlebot)
+   curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'); 
+  
+   // Follow redirects, if any
+   curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true); 
+  
+   // Fail the cURL request if response code = 400 (like 404 errors) 
+   curl_setopt($curl, CURLOPT_FAILONERROR, true); 
+  
+   // Return the actual result of the curl result instead of success code
+   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+  
+   // Wait for 10 seconds to connect, set 0 to wait indefinitely
+   curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+  
+   // Execute the cURL request for a maximum of 50 seconds
+   curl_setopt($curl, CURLOPT_TIMEOUT, 50);
+  
+   // Do not check the SSL certificates
+   curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
+   curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); 
+  
+   // Fetch the URL and save the content in $html variable
+   $html = curl_exec($curl); 
+  
+  
+  
+   // close cURL resource to free up system resources
+   curl_close($curl);
+  
+  
+   
+   $doc = new DOMDocument();
+  $doc->loadHTML($html, LIBXML_NOWARNING | LIBXML_NOERROR);
+  $x_path = new DOMXPath($doc);
+  $nodes= $x_path->query("/html/body/div[1]/div[1]");
+  $oib;
+  foreach ($nodes as $node)
+  {
+    $oib = $node->nodeValue;
   }
-}
-function CheckOIB($oib) {
-	if ( strlen($oib) == 11 ) {	
-		if ( is_numeric($oib) ) {
-			$a = 10;
-			for ($i = 0; $i < 10; $i++) {
-				$a = $a + intval(substr($oib, $i, 1), 10);
-				$a = $a % 10;
-				
-                if ( $a == 0 ) {
-                     $a = 10;
-                     }
-				
-				$a *= 2;
-				$a = $a % 11;
-			}
-			
-			$kontrolni = 11 - $a;
-			
-			if ( $kontrolni == 10 ) { $kontrolni = 0; }
-			
-			return $kontrolni == intval(substr($oib, 10, 1), 10);
-			
-		} else {
-			return false;
-		}
-		
-	} else {
-		return false;	
-	}
-	
-}
+  
+  $oib=str_replace("HR","",$oib);
+  
+  return $oib;
+  }

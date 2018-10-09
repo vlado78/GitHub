@@ -13,30 +13,26 @@ if(!isset($_GET["sifra"]) && !isset($_POST["sifra"])){
 
 
 if(isset($_POST["promjeni"])){
-  $izraz = $veza->prepare("update radionica set 
-              naziv=:naziv, 
-							datum_osnutka=:datum_osnutka
-              where sifra=:sifra;");
-              
-  unset($_POST["promjeni"]);
-  $izraz->execute($_POST);
-  header("location: index.php");
+
+  
+    $izraz = $veza->prepare("update radionica set 
+                naziv=:naziv, 
+                nadredjeni=:nadredjeni,
+                datum_osnutka=:datum_osnutka
+                where sifra=:sifra;");
+                
+    unset($_POST["promjeni"]);
+    $izraz->execute($_POST);
+    header("location: index.php");
+    
 }else{
   $izraz = $veza->prepare("select * from radionica where sifra=:sifra");
   $izraz->execute($_GET);
   $o=$izraz->fetch(PDO::FETCH_OBJ);
 
- 
-    
-    
-  }
+}
 
 ?>
-
-
-
-
-
 
 
 <!doctype html>
@@ -52,16 +48,58 @@ if(isset($_POST["promjeni"])){
     <?php include_once "../../predlozak/navbar.php" ?>
     <h3>Promijeni radionicu</h3>
     
-
-    
-
-
-      <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
+   <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
         
-        <div class="floated-label-wrapper">
-          <label for="naziv">Ime radionice</label>
-          <input value="<?php echo $o->naziv ?>" autocomplete="off" type="text" id="naziv" name="naziv" placeholder="Ime radionice">
-        </div>
+      <div class="floated-label-wrapper">
+     <label for="naziv">Naziv</label>
+       <input value="<?php echo $o->naziv ?>" autocomplete="off" type="text" id="naziv" name="naziv" placeholder="Ime radionice"
+       </div>      
+ 
+ 
+ 
+ 
+     
+     </div>
+     <div class="floated-label-wrapper">
+
+            <label for="nadredjeni">Nadređeni</label>
+            
+            <select id="nadredjeni" name="nadredjeni">
+
+
+                <?php
+              $sifra = $_GET["sifra"];
+              $izraz = $veza->prepare("
+              
+              select sifra, concat(ime, ' ',prezime) as nadredjeni
+              from zaposlenik WHERE radionica = '$sifra'
+              
+
+
+              ");
+              $izraz->execute();
+              $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+               foreach($rezultati as $red):?>
+             <option
+             <?php
+
+             if($red->sifra == $o->nadredjeni)
+             {
+               echo ' selected';
+             }
+             ?>
+             value="<?php echo $red->sifra ?>"><?php echo $red->nadredjeni ?></option>
+            <?php endforeach;?>
+
+
+            </select>
+
+     
+     </div>
+
+
+       
+        
         
         <div class="floated-label-wrapper">
           <label for="datum_osnutka">Datum osnutka</label>
@@ -72,7 +110,10 @@ if(isset($_POST["promjeni"])){
             
             }
             ?>
-          <input value="<?php echo $_POST["datum_osnutka"]  ?>" type="date" autocomplete="off" id="datum_osnutka" name="datum_osnutka" placeholder="Datum osnutka" >
+
+
+          <input value="<?php echo isset($_POST["datum_osnutka"]) ? $_POST["datum_osnutka"] : "" ?>" 
+          type="date" autocomplete="off" id="datum_osnutka"  name="datum_osnutka"  placeholder="Datum osnutka" >
         </div>
  
         
@@ -85,6 +126,7 @@ if(isset($_POST["promjeni"])){
             </div>
             <div class="cell large-2"></div>
             <div class="cell large-4">
+            <input type="hidden" name="sifra" value="<?php echo $_POST["sifra"] ?>">
             <input class="button expanded" type="submit" name="promjeni" value="Promjeni">
             </div>
           </div>       

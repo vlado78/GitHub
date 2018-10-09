@@ -9,24 +9,16 @@ $greske=Array();
 if(isset($_POST["dodaj"])){
 
   if(trim($_POST["broj_sasije"])===""){
-    $greske["broj_sasije"]="Obavezno unos imena ";
+    $greske["broj_sasije"]="Obavezno unos šasije ";
   }
 
   if(strlen($_POST["broj_sasije"])>50){
     $greske["broj_sasije"]="Broj šasije smije imati maksimalno 50 znakovam vi, ste stavili " . strlen($_POST["ime"]) . " znakova";
   }
 
-
-
-
-
-
-
-
-
-
-
-
+    if(trim($_POST["vlasnik"])===""){
+        $greske["vlasnik"]="Obavezno izabrati vlasnika ";
+    }
 
 
 
@@ -40,7 +32,7 @@ if(isset($_POST["dodaj"])){
   $izraz->bindParam(":broj_sasije",$_POST["broj_sasije"]);
   $izraz->bindParam(":vlasnik",$_POST["vlasnik"]);
 
-  if($_POST["datum_prve_registracije"]==="0"){
+  if($_POST["datum_prve_registracije"]===""){
     $izraz->bindValue(":datum_prve_registracije",null,PDO::PARAM_INT);
   }else{
     $izraz->bindParam(":datum_prve_registracije",$_POST["datum_prve_registracije"]);
@@ -102,7 +94,7 @@ if(isset($_POST["dodaj"])){
 
          <?php if(!isset($greske["broj_sasije"])): ?>
         <label for="broj_sasije">Broj šasije</label>
-        <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="broj_sasije" 
+        <input  autocomplete="off" type="text" id="broj_sasije" name="broj_sasije" placeholder="Broj šasije"
         value="<?php echo isset($_POST["broj_sasije"]) ? $_POST["broj_sasije"] : "" ?>">
      
         <?php else:?>
@@ -124,14 +116,12 @@ if(isset($_POST["dodaj"])){
      
       </div>
 
-      
-
-      
-      
       <div class="floated-label-wrapper">
+          <?php if(!isset($greske["vlasnik"])): ?>
+
       <label for="vlasnika">Vlasnik</label>
             <select id="vlasnik" name="vlasnik">
-              <option value="0">Odaberi vlasnika</option>  
+              <option value="">Odaberi vlasnika</option>
               <?php 
               
               $izraz = $veza->prepare("
@@ -152,14 +142,51 @@ if(isset($_POST["dodaj"])){
              ?>
              value="<?php echo $red->sifra ?>"><?php echo $red->vlasnik ?></option>  
             <?php endforeach;?>
-              
-              ?>
+
             </select>
-            </div>
+
+          <?php else:?>
+
+          <label class="is-invalid-label">
+              Zahtjevani unos
+              <select  class="is-invalid-input" style="color: #cc4b37; font-weight: bold" aria-describedby="nazivGreska" data-invalid=""
+                        id="vlasnik" name="vlasnik"
+                      aria-invalid="true">
+                  <option value="">Odaberi vlasnika</option>
+                  <?php
+
+                  $izraz = $veza->prepare("
+              
+              select sifra, concat(ime, ' ',prezime) as vlasnik
+              from vlasnik
+
+
+              ");
+                  $izraz->execute();
+                  $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                  foreach($rezultati as $red):?>
+                      <option
+                          <?php
+                          if(isset($_POST["vlasnik"]) && $_POST["vlasnik"]==$red->sifra){
+                              echo ' selected="selected" ';
+                          }
+                          ?>
+                              value="<?php echo $red->sifra ?>"><?php echo $red->vlasnik ?></option>
+                  <?php endforeach;?>
+
+              </select>
+
+              <span class="form-error is-visible" id="nazivGreska">
+              <?php echo $greske["vlasnik"]; ?>
+              </span>
+          </label>
+          <?php endif;?>
+
+      </div>
 
       <div class="floated-label-wrapper">
         <label for="datum_prve_registracije">Datum prve registracije</label>
-        <input  autocomplete="off" type="date" id="datum_prve_registracije" name="datum_prve_registracije" placeholder="Datum prve registracije" >
+        <input  autocomplete="off" type="date" id="datum_prve_registracije" name="datum_prve_registracije" placeholder="Datum prve registracije" value="<?php  echo (isset($_POST["datum_prve_registracije"])) ?   $_POST["datum_prve_registracije"]  : "" ;  ?>" >
       </div>
 
       <div class="floated-label-wrapper">

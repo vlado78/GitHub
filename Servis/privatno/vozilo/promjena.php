@@ -30,6 +30,7 @@ if(isset($_POST["promjeni"])){
   select a.sifra,
   a.broj_sasije , 
   concat (b.ime,' ', b.prezime) as vlasnik,
+  b.sifra as sifravlasnika,
   a.datum_prve_registracije ,
   a.registarska_oznaka ,
   a.marka_vozila  ,
@@ -53,6 +54,7 @@ if(isset($_POST["promjeni"])){
   ");
   $izraz->execute($_GET);
   $o=$izraz->fetch(PDO::FETCH_OBJ);
+
 }
 ?>
 
@@ -78,7 +80,7 @@ if(isset($_POST["promjeni"])){
   <div class="floated-label-wrapper">
     <label for="vlasnika">Vlasnik</label>
           <select id="vlasnik" name="vlasnik">
-            <option value="0"><?php echo $o->vlasnik ?> </option>  
+
             <?php 
             
             $izraz = $veza->prepare("
@@ -90,12 +92,26 @@ if(isset($_POST["promjeni"])){
             ");
             $izraz->execute();
             $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+
+
+
               foreach($rezultati as $red):?>
-            <option value="<?php echo $red->sifra ?>"><?php echo $red->vlasnik ?></option>  
+            <option value="<?php echo $red->sifra ?>"
+                <?php
+
+            if($o->sifravlasnika == $red->sifra )
+            {
+                echo ' selected';
+            }
+                ?> ><?php echo $red->vlasnik ?>
+
+
+            </option>
           <?php endforeach;?>
             
             ?>
           </select>
+
   </div>
 
     <div class="floated-label-wrapper">
@@ -146,6 +162,7 @@ if(isset($_POST["promjeni"])){
             </div>
             <div class="cell large-2"></div>
             <div class="cell large-4">
+            <input type="hidden" name="sifra" value="<?php echo $_POST["sifra"] ?>">
             <input class="button expanded" type="submit" name="promjeni" value="Promjeni">
             </div>
           </div>    

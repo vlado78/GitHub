@@ -15,7 +15,8 @@ if(!isset($_SESSION[$idAPP."o"])){
      <?php include_once "../predlozak/navbar.php" ?>
      
 
-<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
+evo me</div>
 
 
 
@@ -27,10 +28,9 @@ if(!isset($_SESSION[$idAPP."o"])){
 
    <?php include_once "../predlozak/podnozje.php" ?>
   <?php include_once "../predlozak/skripte.php" ?>
-     <script src="https://code.highcharts.com/highcharts.js"></script>
-     <script src="https://code.highcharts.com/modules/exporting.js"></script>
-     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script>
   Highcharts.chart('container', {
     chart: {
@@ -40,7 +40,7 @@ if(!isset($_SESSION[$idAPP."o"])){
         type: 'pie'
     },
     title: {
-        text: 'Broj polaznika po grupama'
+        text: 'Broj zaposlenika po radionicma'
     },
     tooltip: {
         pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -66,7 +66,9 @@ if(!isset($_SESSION[$idAPP."o"])){
             
             $izraz = $veza->prepare("
  
-           select count(a.sifra)as y,b.naziv from zaposlenik as name a  left join radionica b on a.radionica=b.sifra group by radionica
+            select count(a.sifra)as y,
+            b.naziv as name
+             from zaposlenik a left join radionica b on a.radionica=b.sifra group by radionica
   ");
   $izraz->execute();
  $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);

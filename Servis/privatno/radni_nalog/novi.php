@@ -12,8 +12,8 @@ if(isset($_POST["dodaj"])){
 
   if(count($greske)===0){
     $izraz = $veza->prepare("insert into radni_nalog
-                               (radionica,zaposlenik,vozilo,kilometraza,opis_kvara,datum_pocetka,datum_zavrsetka,napomena) values 
-                               (:radionica,:zaposlenik,:vozilo,:kilometraza,:opis_kvara,:datum_pocetka,:datum_zavrsetka,:napomena)");
+                               (radionica,zaposlenik,vozilo,kilometraza,opis_kvara,datum_pocetka,napomena) values 
+                               (:radionica,:zaposlenik,:vozilo,:kilometraza,:opis_kvara,:datum_pocetka,:napomena)");
 
                               $izraz->bindParam(":radionica",$_POST["radionica"]);
                               $izraz->bindParam(":zaposlenik",$_POST["zaposlenik"]);
@@ -37,12 +37,7 @@ if(isset($_POST["dodaj"])){
                                 $izraz->bindParam(":datum_pocetka",$_POST["datum_pocetka"]);
                               }
 
-                              if($_POST["datum_zavrsetka"]===""){
-                                $izraz->bindValue(":datum_zavrsetka",null,PDO::PARAM_INT);
-                              }else{
-                                $izraz->bindParam(":datum_zavrsetka",$_POST["datum_zavrsetka"]);
-                              }
-
+                            
                               if($_POST["napomena"]===""){
                                 $izraz->bindValue(":napomena",null,PDO::PARAM_INT);
                               }else{
@@ -201,13 +196,13 @@ if(isset($_POST["dodaj"])){
   <div class="floated-label-wrapper">
     <?php if(!isset($greske["vozilo"])): ?>
 
-        <label for="zaposlenik">Zaposlnik</label>
+        <label for="vozilo">Vozilo</label>
               <select id="vozilo" name="vozilo">
                 <option value="">Odaberi vozilo</option>
                 <?php 
                 
                 $izraz = $veza->prepare("
-                select concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
+                select sifra,concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
                         ");
                 $izraz->execute();
                 $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
@@ -234,7 +229,7 @@ if(isset($_POST["dodaj"])){
                     <?php
 
                     $izraz = $veza->prepare("
-                    select concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
+                    select sifra,concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
                                     ");
                     $izraz->execute();
                     $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
@@ -263,28 +258,23 @@ if(isset($_POST["dodaj"])){
 
       <div class="floated-label-wrapper">
         <label for="kilometraza">Kilometaža</label>
-        <input  autocomplete="off" type="number" id="kilometraza" name="kilometraza" placeholder="Kilometraža" >
+        <input  autocomplete="off" type="number" id="kilometraza" name="kilometraza" placeholder="Kilometraža" value="<?php echo isset($_POST["kilometraza"]) ? $_POST["kilometraza"] : "" ?>"> 
       </div>
 
       <div class="floated-label-wrapper">
         <label for="opis_kvara">Opis kvara</label>
-        <textarea  autocomplete="off" type="text" id="opis_kvara" name="opis_kvara" placeholder="Opis kvara" ></textarea>
+        <textarea  autocomplete="off" type="text" id="opis_kvara" name="opis_kvara" placeholder="Opis kvara" ><?php echo isset($_POST["opis_kvara"]) ? $_POST["opis_kvara"] : "" ?> </textarea>
       </div>
 
       <div class="floated-label-wrapper">
         <label for="datum_pocetka">Datum početka</label>
-        <input  autocomplete="off"  type="date" id="datum_pocetka" name="datum_pocetka" placeholder="Datum početka" >
+        <input  autocomplete="off"  type="date" id="datum_pocetka" name="datum_pocetka" placeholder="Datum početka" value="<?php echo isset($_POST["datum_pocetka"]) ? $_POST["datum_pocetka"] : "" ?>"> 
       </div>
 
-      <div class="floated-label-wrapper">
-        <label for=datum_zavrsetka">Datum kraja</label>
-        <input  autocomplete="off"  type="date" id="datum_zavrsetka" name="datum_zavrsetka" placeholder="Datum kraja" >
-      </div>
-
-      
+           
       <div class="floated-label-wrapper">
         <label for="napomena">Napomena</label>
-        <textarea  autocomplete="off" type="text" id="napomena" name="napomena" placeholder="Napomena" ></textarea>
+        <textarea  autocomplete="off" type="text" id="napomena" name="napomena" placeholder="Napomena" > <?php echo isset($_POST["napomena"]) ? $_POST["napomena"] : "" ?> </textarea>
       </div>
       <div class="grid-x">
             <div class="cell large-1"></div>

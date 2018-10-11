@@ -55,7 +55,7 @@ if($stranica==0){
 
   <form action="<?php echo $_SERVER["PHP_SELF"] ?>">
   <div class="input-group input-group-rounded">
-  <input class="input-group-field" type="text" name="uvjet" value="<?php echo $uvjet ?>">
+  <input class="input-group-field" type="text" placeholder="ime/prezime" name="uvjet" value="<?php echo $uvjet ?>">
   <div class="input-group-button">
     <input type="submit" class="button expanded" value="Traži..">
   </div>
@@ -86,7 +86,8 @@ if($stranica==0){
   from zaposlenik a
   left join radionica c on a.radionica=c.sifra
   where concat(a.ime, ' ', a.prezime) like :uvjet
- limit :stranica, 10
+   order by radionica  limit :stranica, 10 
+ 
  
  ");
 
@@ -108,11 +109,9 @@ $izraz->bindValue("uvjet","%" . $uvjet . "%");
         <tr>
           <th>Ime</th>
           <th>Prezime</th>
-            <th>Broj mobitela</th>
+          <th>Broj mobitela</th>
           <th>e-mail</th>
-
           <th>Radionica</th>
-
           <th>Napomena</th>
           <th>Akcija</th>
         </tr>

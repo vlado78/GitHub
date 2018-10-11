@@ -42,11 +42,37 @@ if(isset($_POST["promjeni"])){
   <h3>Promijeni radni nalog</h3>
   <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
     
-    <div class="floated-label-wrapper">
-      <label for="radionica">Radionica</label>
-      <input value="<?php echo $o->radionica ?>" autocomplete="off" type="number" id="radionica" name="radionica" placeholder="Radionica">
-    </div>
-    
+  <div class="floated-label-wrapper">
+            <label for="radionica">Radionica</label>
+            <select id="radionica" name="radionica">
+                <option value="">Odaberi radionicu</option>
+                <?php
+
+                $izraz = $veza->prepare("
+              
+              select sifra, naziv
+              from radionica
+              
+
+
+              ");
+                $izraz->execute();
+                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                foreach($rezultati as $red):?>
+
+                    <option
+                        <?php
+                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                            echo ' selected="selected" ';
+                        }
+                        ?>
+                            value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>
+                <?php endforeach;?>
+            </select>
+        </div>
+
+
+        
     <div class="floated-label-wrapper">
       <label for="zaposlenik">Zaposlenik</label>
       <input value="<?php echo $o->zaposlenik ?>" autocomplete="off" type="number" id="zaposlenik" name="zaposlenik" placeholder="Zaposlenik" >

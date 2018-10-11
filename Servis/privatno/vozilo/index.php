@@ -16,11 +16,11 @@ if(isset($_GET["uvjet"])){
 
 $izraz = $veza->prepare("
  
- select count(sifra) from vlasnik where concat(ime, ' ', prezime) like :uvjet ;
+ select count(sifra) from vozilo where concat(registarska_oznaka,' ', broj_sasije,' ',oznaka_modela,' ',marka_vozila) like :uvjet ;
  ");
  $izraz->execute(array("uvjet"=>"%" . $uvjet . "%"));
- $ukupnoVlasnika = $izraz->fetchColumn();
-$ukupnoStranica=ceil($ukupnoVlasnika/10);
+ $ukupnoVozila = $izraz->fetchColumn();
+$ukupnoStranica=ceil($ukupnoVozila/10);
 
 if($stranica>$ukupnoStranica){
   $stranica=$ukupnoStranica;
@@ -55,7 +55,7 @@ if($stranica==0){
 
   <form action="<?php echo $_SERVER["PHP_SELF"] ?>">
   <div class="input-group input-group-rounded">
-  <input class="input-group-field" type="text" name="uvjet" value="<?php echo $uvjet ?>">
+  <input class="input-group-field" type="text" name="uvjet" placeholder="reg.oznaka/br.sasij/model/marka" value="<?php echo $uvjet ?>">
   <div class="input-group-button">
     <input type="submit" class="button expanded" value="Traži..">
   </div>
@@ -92,7 +92,7 @@ if($stranica==0){
  on a.vlasnik=b.sifra
  left join radni_nalog c on a.sifra=c.vozilo
 
- where concat(a.broj_sasije, ' ', a.registarska_oznaka) like :uvjet
+ where concat(registarska_oznaka,' ', broj_sasije,' ',oznaka_modela,' ',marka_vozila) like :uvjet
 
  group by
   a.broj_sasije, 

@@ -15,11 +15,11 @@ if(isset($_GET["uvjet"])){
 
 $izraz = $veza->prepare("
  
- select count(sifra) from vlasnik where concat(ime, ' ', prezime) like :uvjet ;
+ select count(sifra) from radni_nalog where sifra like :uvjet ;
  ");
  $izraz->execute(array("uvjet"=>"%" . $uvjet . "%"));
- $ukupnoVlasnika = $izraz->fetchColumn();
-$ukupnoStranica=ceil($ukupnoVlasnika/10);
+ $ukupnoRadnihNaloga = $izraz->fetchColumn();
+$ukupnoStranica=ceil($ukupnoRadnihNaloga/6);
 
 if($stranica>$ukupnoStranica){
   $stranica=$ukupnoStranica;
@@ -27,9 +27,6 @@ if($stranica>$ukupnoStranica){
 if($stranica==0){
   $stranica=1;
 }
-
-
-
 
 
 ?>
@@ -49,14 +46,13 @@ if($stranica==0){
 <div class="grid-x">
            
   <div class="cell large-3">
-    <h3>Vlasnici</h3>
+    <h3>Radni nalozi</h3>
   </div>
-
   <div class="cell large-2"></div>
 
   <form action="<?php echo $_SERVER["PHP_SELF"] ?>">
   <div class="input-group input-group-rounded">
-  <input class="input-group-field" type="text" name="uvjet" placeholder="ime/prezime" value="<?php echo $uvjet ?>">
+  <input class="input-group-field" type="text" placeholder="kilometraza" name="uvjet" value="<?php echo $uvjet ?>">
   <div class="input-group-button">
     <input type="submit" class="button expanded" value="Traži..">
   </div>
@@ -64,19 +60,15 @@ if($stranica==0){
 </form>
 
 
- 
-<div class="cell large-2"></div>
+  <div class="cell large-2"></div>
+
   <div class="cell large-2">
-    <a href="novi.php"  class="button expanded">Dodaj novog  vlasnika</a>
+    <a href="novi.php"  class="button expanded">Dodaj novi radni nalog</a>
   </div>
-  </div> 
-
-
+</div>       
 
 
   
-
-
 
 
  <?php
@@ -84,24 +76,34 @@ if($stranica==0){
  $izraz = $veza->prepare("
  
  select 
-a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_rodjenja,a.oib,a.napomena,
- count(b.sifra) as vozila
- from vlasnik a left join vozilo b
- on a.sifra=b.vlasnik 
- where concat(a.ime, ' ', a.prezime) like :uvjet
-group by
-a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,a.broj_mobitela,a.email,a.datum_rodjenja,a.oib,a.napomena
-order by prezime
-limit :stranica, 10
-");
+ a.sifra, 
+ b.naziv as radionica, 
+ concat(c.ime,' ',c.prezime) as zaposlenik, 
+ concat(d.marka_vozila,' ',d.oznaka_modela) as vozilo, 
+ a.kilometraza, 
+ concat(e.ime,' ',e.prezime) as vlasnik,
+ a.opis_kvara, 
+ a.datum_pocetka, 
+ a.datum_zavrsetka, 
+ a.napomena
+ from radni_nalog a 
+ left join radionica b on a.radionica=b.sifra 
+ left join zaposlenik c on a.zaposlenik=c.sifra 
+ left join vozilo d on a.vozilo=d.sifra
+ left join vlasnik e on a.vozilo=e.sifra
+ where a.sifra like :uvjet
+    limit :stranica, 6
 
-$izraz->bindValue("stranica",($stranica*10) - 10,PDO::PARAM_INT);
-$izraz->bindValue("uvjet","%" . $uvjet . "%");
- 
- $izraz->execute();
- $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
- 
+ ");
 
+
+ $izraz->bindValue("stranica",($stranica*6) - 6,PDO::PARAM_INT);
+ $izraz->bindValue("uvjet","%" . $uvjet . "%");
+  
+  $izraz->execute();
+  $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+  
+ 
  ?>
 
 
@@ -110,13 +112,15 @@ $izraz->bindValue("uvjet","%" . $uvjet . "%");
   <table class="responsive-card-table unstriped">
       <thead>
         <tr>
-          <th>Ime</th>
-          <th>Prezime</th>
-          <th>Ulica i broj</th>
-          <th>Mjesto</th>
-          <th>Broj mobitela</th>
-          <th>e-mail</th>
-          <th>Datum rođenja</th>
+        <th>broj rn</th>
+          <th>Radionica</th>
+          <th>Zaposlenik</th>
+          <th>Vozilo</th>
+          <th>Vlasnik</th>
+          <th>Kilometraža</th>
+          <th>Opis kvara</th>
+          <th>Datum početka</th>
+          <th>Datum kraja</th>
           <th>Napomena</th>
           <th>Akcija</th>
         </tr>
@@ -124,24 +128,21 @@ $izraz->bindValue("uvjet","%" . $uvjet . "%");
     <tbody>
     <?php foreach($rezultati as $red):?>
       <tr>
-      <td data-label="Ime"><?php echo $red->ime; ?></td>
-      <td title="<?php echo "OIB: " . $red->oib; ?>"><?php echo $red->prezime; ?></td>
-      <td data-label="Ulica i broj"><?php echo ($red->ulica_i_broj !=null) ? ($red->ulica_i_broj) :  "Nije definirano "       ; ?></td>
-      <td data-label="Mjesto"> <?php echo ($red->mjesto !=null) ? ( $red->mjesto) :  "Nije definirano " ; ?> </td>
-      <td data-label="Broj mobitela">  <?php echo ($red->broj_mobitela !=null) ? ( $red->broj_mobitela) :  "Nije definirano " ; ?>  </td>
-      <td data-label="e-mail"> <?php echo ($red->email !=null) ? ( $red->email) :  "Nije definirano " ; ?> </td>
-      <td data-label="Datum rođenja"> <?php echo ($red->datum_rodjenja !=null) ? date ("d.m.Y.",strtotime($red->datum_rodjenja)) : "Nije definirano " ;  ?> </td>
-      <td data-label="Napomena"> <?php  echo ($red->napomena !=null) ?  $red->napomena : "Nije definirano " ;?> </td>
+      <td data-label="broj rn"><?php echo $red->sifra; ?></td>
+      <td data-label="Radionica"><?php echo $red->radionica; ?></td>
+      <td data-label="Zaposlenik"><?php echo $red->zaposlenik; ?></td>
+      <td data-label="Vozilo"><?php echo $red->vozilo; ?></td>
+      <td data-label="Zaposlenik"><?php echo $red->vlasnik; ?></td>
+      <td data-label="Kilometraža"><?php echo ($red->kilometraza !=null) ? ($red->kilometraza) :  "Nije definirano "       ; ?></td>
+      <td data-label="Opis kvara"><?php echo ($red->opis_kvara !=null) ? ($red->opis_kvara) :  "Nije definirano "       ; ?></td>
+      <td data-label="Datum početka"><?php echo ($red->datum_pocetka!=null) ? date("d.m.Y.",strtotime($red->datum_pocetka)) : "Nije definirano "; ?></td>
+      <td data-label="Datum kraja"><?php echo ($red->datum_zavrsetka!=null) ? date("d.m.Y.",strtotime($red->datum_zavrsetka)) : "Nije definirano "; ?></td>
+      <td data-label="Napomena"><?php echo ($red->napomena !=null) ? ($red->napomena) :  "Nije definirano "       ; ?></td>
       <td data-label="Akcija">
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
             </a> 
-            <?php if($red->vozila==0): ?>
-				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->ime,$red->prezime ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
-				    <i class="fas fa-trash fa-2x" style="color: red;"></i>
-            </a> 
-            <?php endif;?>
-           
+          
         </td>
       </tr>
       
@@ -149,6 +150,7 @@ $izraz->bindValue("uvjet","%" . $uvjet . "%");
     <?php endforeach;?>
     </tbody>
     </table>
+
     <?php 
 if($ukupnoStranica==0){
   $ukupnoStranica=1;
@@ -165,14 +167,8 @@ if($ukupnoStranica==0){
 </nav>
 
 
+
   </div>
-  
-  
-
-
-  
-    
-    
 
    <?php include_once "../../predlozak/podnozje.php" ?>
   <?php include_once "../../predlozak/skripte.php" ?>

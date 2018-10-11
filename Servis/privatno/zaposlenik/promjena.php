@@ -182,6 +182,35 @@ else{
             <?php endif;?>
         </div>
 
+         <div class="floated-label-wrapper">
+            <label for="radionica">Radionica</label>
+            <select id="radionica" name="radionica">
+                <option value="">Odaberi radionicu</option>
+                <?php
+
+                $izraz = $veza->prepare("
+              
+              select sifra, naziv
+              from radionica
+              
+
+
+              ");
+                $izraz->execute();
+                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                foreach($rezultati as $red):?>
+
+                    <option
+                        <?php
+                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                            echo ' selected="selected" ';
+                        }
+                        ?>
+                            value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>
+                <?php endforeach;?>
+            </select>
+        </div>
+
 
         <div class="floated-label-wrapper">
             <label for="ulica_i_broj">Ulica i broj</label>
@@ -226,39 +255,7 @@ else{
             <input   autocomplete="off" type="text" id="broj_ugovora" name="broj_ugovora" placeholder="Broj ugovora"  value="<?php echo isset($_POST["broj_ugovora"]) ?  $_POST["broj_ugovora"]: ""; ?>">
         </div>
 
-        <div class="floated-label-wrapper">
-            <label for="radionica">Radionica</label>
-            <select id="radionica" name="radionica">
-                <option value="">Odaberi radionicu</option>
-                <?php
-
-                $izraz = $veza->prepare("
-              
-              select sifra, naziv
-              from radionica
-              
-
-
-              ");
-                $izraz->execute();
-                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
-                foreach($rezultati as $red):?>
-
-                    <option
-                        <?php
-                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
-                            echo ' selected="selected" ';
-                        }
-                        ?>
-                            value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>
-                <?php endforeach;?>
-            </select>
-        </div>
-
-       
-
-
-
+   
         <div class="floated-label-wrapper">
             <label for="napomena">Napomena</label>
             <textarea  autocomplete="off" type="text" id="napomena" name="napomena" placeholder="Napomena"  ><?php echo isset($_POST["napomena"]) ?  $_POST["napomena"]: ""; ?></textarea>

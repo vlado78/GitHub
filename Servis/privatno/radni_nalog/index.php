@@ -15,7 +15,10 @@ if(isset($_GET["uvjet"])){
 
 $izraz = $veza->prepare("
  
- select count(sifra) from radni_nalog where sifra like :uvjet ;
+ select count(a.sifra) 
+ from radni_nalog a left join radionica b on a.radionica=b.sifra 
+ where concat(a.sifra,' ',b.naziv ) 
+ like :uvjet ;
  ");
  $izraz->execute(array("uvjet"=>"%" . $uvjet . "%"));
  $ukupnoRadnihNaloga = $izraz->fetchColumn();
@@ -91,7 +94,7 @@ if($stranica==0){
  left join zaposlenik c on a.zaposlenik=c.sifra 
  left join vozilo d on a.vozilo=d.sifra
  left join vlasnik e on a.vozilo=e.sifra
- where a.sifra like :uvjet
+ where concat(a.sifra,' ',b.naziv ) like :uvjet
     limit :stranica, 6
 
  ");

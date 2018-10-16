@@ -19,13 +19,13 @@ if(isset($_POST["promjeni"])){
               napomena=:napomena
               where sifra=:sifra;");
               
-  unset($_POST["promjeni"]);
-  $izraz->execute($_POST);
+  
+  $izraz->execute();
   header("location: index.php");
 }else{
   $izraz = $veza->prepare("select * from radni_nalog where sifra=:sifra");
   $izraz->execute($_GET);
-  $o=$izraz->fetch(PDO::FETCH_OBJ);
+  $o=$izraz->fetch(PDO::FETCH_OBJ);////////////
 }
 ?>
 
@@ -72,6 +72,10 @@ if(isset($_POST["promjeni"])){
         </div>
 
 zaposlenik
+
+ 
+
+
  
 <div class="floated-label-wrapper">
             <label for="vozilo">Vozilo</label>
@@ -97,7 +101,7 @@ zaposlenik
                             echo ' selected="selected" ';
                         }
                         ?>
-                            value="<?php echo $red->sifra ?>"><?php echo $red->registarska_oznaka,' ',$red->marka_vozila,' ',$red->oznaka_modela?></option>
+                            value="<?php echo $red->sifra ?>"><?php echo $red->registarska_oznaka,' ',$red->marka_vozila,' ', $red->oznaka_modela?></option>
                 <?php endforeach;?>
             </select>
         </div>
@@ -152,8 +156,6 @@ zaposlenik
 
   <?php include_once "../../predlozak/podnozje.php" ?>
   <?php include_once "../../predlozak/skripte.php" ?>
-  </div>
+ 
   </body>
-  
-
 </html>

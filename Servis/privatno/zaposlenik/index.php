@@ -15,7 +15,9 @@ if(isset($_GET["uvjet"])){
 
 $izraz = $veza->prepare("
  
- select count(sifra) from zaposlenik where concat(ime, ' ', prezime) like :uvjet ;
+ select count(a.sifra) from zaposlenik a left join radionica b on a.radionica=b.sifra
+  where concat(ime, ' ', prezime,' ',b.naziv) 
+  like :uvjet ;
  ");
  $izraz->execute(array("uvjet"=>"%" . $uvjet . "%"));
  $ukupnoZaposlenika = $izraz->fetchColumn();
@@ -82,10 +84,11 @@ if($stranica==0){
  select 
  a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,
  a.broj_mobitela,a.email,a.datum_rodjenja,a.datum_pocetka_rada,
- a.oib,a.broj_ugovora,c.naziv as radionica,a.radni_nalog,a.napomena
+ a.oib,a.broj_ugovora,b.naziv as radionica,a.radni_nalog,a.napomena
   from zaposlenik a
-  left join radionica c on a.radionica=c.sifra
-  where concat(a.ime, ' ', a.prezime) like :uvjet
+  left join radionica b on a.radionica=b.sifra
+  where concat(ime, ' ', prezime,' ',b.naziv) 
+    like :uvjet
    order by radionica  limit :stranica, 10 
  
  

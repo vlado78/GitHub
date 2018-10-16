@@ -64,9 +64,8 @@ if($stranica==0){
 
 
   <div class="cell large-2"></div>
-
-  <div class="cell large-2">
-    <a href="novi.php"  class="button expanded">Dodaj novi radni nalog</a>
+  <div class="cell large-2  ">
+    <a href="novi.php"  class="button expanded rounded">Dodaj novi radni nalog</a>
   </div>
 </div>       
 

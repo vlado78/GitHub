@@ -64,10 +64,12 @@ if($stranica==0){
 </form>
 
 
- 
-<div class="cell large-2"></div>
+ <div class="cell large-2">
+    
+  </div>
+
   <div class="cell large-2">
-    <a href="novi.php"  class="button expanded">Dodaj novog  vlasnika</a>
+    <a href="novi.php"  class="button expanded rounded">Dodaj novog  vlasnika</a>
   </div>
   </div> 
 

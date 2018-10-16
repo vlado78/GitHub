@@ -69,7 +69,7 @@ if($stranica==0){
  
 <div class="cell large-2"></div>
   <div class="cell large-2">
-    <a href="novi.php"  class="button expanded">Dodaj novo vozilo</a>
+    <a href="novi.php"  class="button expanded rounded">Dodaj novo vozilo</a>
   </div>
   </div> 
 

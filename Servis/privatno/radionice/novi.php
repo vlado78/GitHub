@@ -100,11 +100,11 @@ if(isset($_POST["dodaj"])){
     <div class="grid-x">
             <div class="cell large-1"></div>
             <div class="cell large-4">
-              <a href="index.php" class="alert button expanded">Nazad</a>
+              <a href="index.php" class="alert button expanded rounded">Nazad</a>
             </div>
             <div class="cell large-2"></div>
             <div class="cell large-4">
-              <input class="button expanded" type="submit" name="dodaj" value="Dodaj novi">
+              <input class="button expanded rounded" type="submit" name="dodaj" value="Dodaj novi">
             </div>
           </div>       
             

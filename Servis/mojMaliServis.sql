@@ -10,6 +10,11 @@ create database autoservis default character set utf8;
 
 use autoservis;
 
+
+
+
+
+
 create table radionica(
 sifra int primary key not null auto_increment,
 naziv varchar (20),

@@ -10,7 +10,7 @@ if(!isset($_GET["sifra"]) && !isset($_POST["sifra"])){
 if(isset($_POST["promjeni"])){
   $izraz = $veza->prepare("update radni_nalog set 
               radionica=:radionica, 
-              zaposlenik=:zaposlenik, 
+              
               vozilo=:vozilo, 
               kilometraza=:kilometraza, 
               opis_kvara=:opis_kvara, 
@@ -62,7 +62,7 @@ if(isset($_POST["promjeni"])){
 
                     <option
                         <?php
-                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                        if(isset($o->radionica) && $o->radionica==$red->sifra){
                             echo ' selected="selected" ';
                         }
                         ?>
@@ -71,17 +71,36 @@ if(isset($_POST["promjeni"])){
             </select>
         </div>
 
+zaposlenik
+ 
+<div class="floated-label-wrapper">
+            <label for="vozilo">Vozilo</label>
+            <select id="vozilo" name="vozilo">
+                <option value="">Odaberi vozilo</option>
+                <?php
 
-        
-    <div class="floated-label-wrapper">
-      <label for="zaposlenik">Zaposlenik</label>
-      <input value="<?php echo $o->zaposlenik ?>" autocomplete="off" type="number" id="zaposlenik" name="zaposlenik" placeholder="Zaposlenik" >
-    </div>
+                $izraz = $veza->prepare("
+              
+              select *
+              from vozilo
+              
 
-    <div class="floated-label-wrapper">
-      <label for="vozilo">Vozilo</label>
-      <input value="<?php echo $o->vozilo ?>" autocomplete="off" type="number" id="vozilo" name="vozilo" placeholder="Vozilo" >
-    </div>
+
+              ");
+                $izraz->execute();
+                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                foreach($rezultati as $red):?>
+
+                    <option
+                        <?php
+                        if(isset($o->vozilo) && $o->vozilo==$red->sifra){
+                            echo ' selected="selected" ';
+                        }
+                        ?>
+                            value="<?php echo $red->sifra ?>"><?php echo $red->registarska_oznaka,' ',$red->marka_vozila,' ',$red->oznaka_modela?></option>
+                <?php endforeach;?>
+            </select>
+        </div>
 
     <div class="floated-label-wrapper">
       <label for="kilometraza">Kilometraža</label>

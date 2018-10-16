@@ -52,7 +52,7 @@ if($stranica==0){
 
   <form action="<?php echo $_SERVER["PHP_SELF"] ?>">
   <div class="input-group input-group-rounded">
-  <input class="input-group-field" type="text" placeholder="kilometraza" name="uvjet" value="<?php echo $uvjet ?>">
+  <input class="input-group-field" type="text" placeholder="" name="uvjet" value="<?php echo $uvjet ?>">
   <div class="input-group-button">
     <input type="submit" class="button expanded" value="Traži..">
   </div>
@@ -79,7 +79,7 @@ if($stranica==0){
  a.sifra, 
  b.naziv as radionica, 
  concat(c.ime,' ',c.prezime) as zaposlenik, 
- concat(d.marka_vozila,' ',d.oznaka_modela) as vozilo, 
+ concat(d.marka_vozila,' ',d.oznaka_modela,' ',d.registarska_oznaka) as vozilo, 
  a.kilometraza, 
  concat(e.ime,' ',e.prezime) as vlasnik,
  a.opis_kvara, 
@@ -116,6 +116,7 @@ if($stranica==0){
           <th>Radionica</th>
           <th>Zaposlenik</th>
           <th>Vozilo</th>
+          
           <th>Vlasnik</th>
           <th>Kilometraža</th>
           <th>Opis kvara</th>
@@ -132,6 +133,7 @@ if($stranica==0){
       <td data-label="Radionica"><?php echo $red->radionica; ?></td>
       <td data-label="Zaposlenik"><?php echo $red->zaposlenik; ?></td>
       <td data-label="Vozilo"><?php echo $red->vozilo; ?></td>
+     
       <td data-label="Zaposlenik"><?php echo $red->vlasnik; ?></td>
       <td data-label="Kilometraža"><?php echo ($red->kilometraza !=null) ? ($red->kilometraza) :  "Nije definirano "       ; ?></td>
       <td data-label="Opis kvara"><?php echo ($red->opis_kvara !=null) ? ($red->opis_kvara) :  "Nije definirano "       ; ?></td>

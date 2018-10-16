@@ -202,7 +202,7 @@ else{
 
                     <option
                         <?php
-                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                        if(isset($o["radionica"]) && $o["radionica"]==$red->sifra){
                             echo ' selected="selected" ';
                         }
                         ?>

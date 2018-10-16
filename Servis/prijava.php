@@ -28,6 +28,7 @@
 
 
 <div class="grid-x grid-padding-x ">
+<div class="large-4 cell "></div>
   <div class="large-4 cell ">
     <form class="callout text-center"  action="autoriziraj.php" method="post">
       <h2>Prijavite se</h2>
@@ -46,6 +47,8 @@
 
     </form>
   </div>
+  
+ 
 </div>
 
 

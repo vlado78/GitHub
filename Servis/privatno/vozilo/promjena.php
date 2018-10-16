@@ -99,11 +99,11 @@ if(isset($_POST["promjeni"])){
             <option value="<?php echo $red->sifra ?>"
                 <?php
 
-            if($o->sifravlasnika == $red->sifra )
-            {
-                echo ' selected';
-            }
-                ?> ><?php echo $red->vlasnik ?>
+                    if($o->sifravlasnika == $red->sifra )
+                    {
+                        echo ' selected';
+                    }
+                        ?> ><?php echo $red->vlasnik ?>
 
 
             </option>

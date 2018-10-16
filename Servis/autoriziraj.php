@@ -10,11 +10,12 @@ include_once "konfiguracija.php";
         exit;
     }
 
-    if(($_POST["korisnik"]==="tjakopec" && $_POST["lozinka"]==="t")
-    ||
-    ($_POST["korisnik"]==="edunova" && $_POST["lozinka"]==="e")
-    ||
-    ($_POST["korisnik"]==="1" && $_POST["lozinka"]==="1")
+    if(
+        ($_POST["korisnik"]==="tjakopec" && $_POST["lozinka"]==="t")
+        ||
+        ($_POST["korisnik"]==="edunova" && $_POST["lozinka"]==="e")
+        ||
+        ($_POST["korisnik"]==="1" && $_POST["lozinka"]==="1")
     ){
         //pusti dalje
         $_SESSION[$idAPP."o"]= $_POST["korisnik"];

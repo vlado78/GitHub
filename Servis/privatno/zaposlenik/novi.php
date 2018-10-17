@@ -12,8 +12,8 @@ if(isset($_POST["dodaj"])){
   if(count($greske)===0){
 
 
-  $izraz = $veza->prepare("insert into zaposlenik (ime,prezime,ulica_i_broj,mjesto,broj_mobitela,email,datum_rodjenja,datum_pocetka_rada,oib,broj_ugovora,radionica,radni_nalog,napomena) values
-               (:ime,:prezime,:ulica_i_broj,:mjesto,:broj_mobitela,:email,:datum_rodjenja,:datum_pocetka_rada,:oib,:broj_ugovora,:radionica,:radni_nalog,:napomena)");
+  $izraz = $veza->prepare("insert into zaposlenik (ime,prezime,ulica_i_broj,mjesto,broj_mobitela,email,datum_rodjenja,datum_pocetka_rada,oib,broj_ugovora,radionica,napomena) values
+               (:ime,:prezime,:ulica_i_broj,:mjesto,:broj_mobitela,:email,:datum_rodjenja,:datum_pocetka_rada,:oib,:broj_ugovora,:radionica,:napomena)");
    
               $izraz->bindParam(":ime",$_POST["ime"]);
               $izraz->bindParam(":prezime",$_POST["prezime"]);
@@ -70,11 +70,7 @@ if(isset($_POST["dodaj"])){
               }else{
                   $izraz->bindParam(":radionica",$_POST["radionica"]);
               }
-
-              
-                  $izraz->bindValue(":radni_nalog",null,PDO::PARAM_INT);
-             
-            
+          
 
               if($_POST["napomena"]===""){
                 $izraz->bindValue(":napomena",null,PDO::PARAM_INT);

@@ -80,7 +80,7 @@ if($stranica==0){
  select 
  a.sifra, 
  b.naziv as radionica, 
- concat(c.ime,' ',c.prezime) as zaposlenik, 
+ 
  concat(d.marka_vozila,' ',d.oznaka_modela,' ',d.registarska_oznaka) as vozilo, 
  a.kilometraza, 
  concat(e.ime,' ',e.prezime) as vlasnik,
@@ -90,7 +90,7 @@ if($stranica==0){
  a.napomena
  from radni_nalog a 
  left join radionica b on a.radionica=b.sifra 
- left join zaposlenik c on a.zaposlenik=c.sifra 
+ 
  left join vozilo d on a.vozilo=d.sifra
  left join vlasnik e on a.vozilo=e.sifra
  where concat(a.sifra,' ',b.naziv ) like :uvjet
@@ -116,7 +116,7 @@ if($stranica==0){
         <tr>
         <th>broj rn</th>
           <th>Radionica</th>
-          <th>Zaposlenik</th>
+          
           <th>Vozilo</th>
           
           <th>Vlasnik</th>
@@ -133,10 +133,10 @@ if($stranica==0){
       <tr>
       <td data-label="broj rn"><?php echo $red->sifra; ?></td>
       <td data-label="Radionica"><?php echo $red->radionica; ?></td>
-      <td data-label="Zaposlenik"><?php echo $red->zaposlenik; ?></td>
+      
       <td data-label="Vozilo"><?php echo $red->vozilo; ?></td>
      
-      <td data-label="Zaposlenik"><?php echo $red->vlasnik; ?></td>
+      <td data-label="Vlasnik"><?php echo $red->vlasnik; ?></td>
       <td data-label="Kilometraža"><?php echo ($red->kilometraza !=null) ? ($red->kilometraza) :  "Nije definirano "       ; ?></td>
       <td data-label="Opis kvara"><?php echo ($red->opis_kvara !=null) ? ($red->opis_kvara) :  "Nije definirano "       ; ?></td>
       <td data-label="Datum početka"><?php echo ($red->datum_pocetka!=null) ? date("d.m.Y.",strtotime($red->datum_pocetka)) : "Nije definirano "; ?></td>

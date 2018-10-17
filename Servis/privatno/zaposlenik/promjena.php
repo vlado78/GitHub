@@ -28,7 +28,6 @@ if(isset($_POST["promijeni"])){
               datum_pocetka_rada=:datum_pocetka_rada,
               broj_ugovora=:broj_ugovora,
               radionica=:radionica,
-              radni_nalog=:radni_nalog,
               oib=:oib, 
               napomena=:napomena
               where sifra=:sifra;
@@ -94,10 +93,6 @@ if(isset($_POST["promijeni"])){
               }else{
                   $izraz->bindParam(":radionica",$_POST["radionica"]);
               }
-
-             
-                  $izraz->bindValue(":radni_nalog",null,PDO::PARAM_INT);
-             
 
               if($_POST["napomena"]===""){
                 $izraz->bindValue(":napomena",null,PDO::PARAM_INT);
@@ -266,12 +261,12 @@ else{
       <div class="grid-x">
             <div class="cell large-1"></div>
             <div class="cell large-4">
-              <a href="index.php" class="alert button expanded">Nazad</a>
+              <a href="index.php" class="alert button expanded rounded">Nazad</a>
             </div>
             <div class="cell large-2"></div>
             <div class="cell large-4">
             <input type="hidden" name="sifra" value="<?php echo $_POST["sifra"] ?>">
-              <input class="button expanded" type="submit" name="promijeni" value="Promijeni">
+              <input class="button expanded rounded" type="submit" name="promijeni" value="Promijeni">
             </div>
           </div>       
 

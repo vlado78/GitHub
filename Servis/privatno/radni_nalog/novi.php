@@ -12,11 +12,11 @@ if(isset($_POST["dodaj"])){
 
   if(count($greske)===0){
     $izraz = $veza->prepare("insert into radni_nalog
-                               (radionica,zaposlenik,vozilo,kilometraza,opis_kvara,datum_pocetka,napomena) values 
-                               (:radionica,:zaposlenik,:vozilo,:kilometraza,:opis_kvara,:datum_pocetka,:napomena)");
+                               (radionica,vozilo,kilometraza,opis_kvara,datum_pocetka,napomena) values 
+                               (:radionica,:vozilo,:kilometraza,:opis_kvara,:datum_pocetka,:napomena)");
 
                               $izraz->bindParam(":radionica",$_POST["radionica"]);
-                              $izraz->bindParam(":zaposlenik",$_POST["zaposlenik"]);
+                             
                               $izraz->bindParam(":vozilo",$_POST["vozilo"]);
 
                               if($_POST["kilometraza"]===""){
@@ -131,66 +131,7 @@ if(isset($_POST["dodaj"])){
 
 
 
-   <div class="floated-label-wrapper">
-    <?php if(!isset($greske["zaposlenik"])): ?>
-
-        <label for="zaposlenik">Zaposlnik</label>
-              <select id="zaposlenik" name="zaposlenik">
-                <option value="">Odaberi zaposlenika</option>
-                <?php 
-                
-                $izraz = $veza->prepare("
-                                select sifra, concat (ime,prezime) as zaposlenik from zaposlenik
-                        ");
-                $izraz->execute();
-                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
-                foreach($rezultati as $red):?>
-              <option 
-              <?php 
-              if(isset($_POST["zaposlenik"]) && $_POST["zaposlenik"]==$red->sifra){
-                echo ' selected="selected" ';
-              }
-              ?>
-              value="<?php echo $red->sifra ?>"><?php echo $red->zaposlenik ?></option>  
-              <?php endforeach;?>
-
-              </select>
-
-    <?php else:?>
-
-            <label class="is-invalid-label">
-                Zahtjevani unos
-                <select  class="is-invalid-input" style="color: #cc4b37; font-weight: bold" aria-describedby="nazivGreska" data-invalid=""
-                          id="zaposlenik" name="zaposlenik"
-                        aria-invalid="true">
-                    <option value="">Odaberi zaposlenika</option>
-                    <?php
-
-                    $izraz = $veza->prepare("
-                    select sifra, concat (ime,prezime) as zaposlenik from zaposlenik
-                                    ");
-                    $izraz->execute();
-                    $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
-                    foreach($rezultati as $red):?>
-                        <option
-                            <?php
-                            if(isset($_POST["zaposlenik"]) && $_POST["zaposlenik"]==$red->sifra){
-                                echo ' selected="selected" ';
-                            }
-                            ?>
-                                value="<?php echo $red->sifra ?>"><?php echo $red->zaposlenik ?></option>
-                    <?php endforeach;?>
-
-                </select>
-
-                <span class="form-error is-visible" id="nazivGreska">
-                <?php echo $greske["zaposlenik"]; ?>
-                </span>
-            </label>
-    <?php endif;?>
-
-      </div>
-
+  
 
   
   <div class="floated-label-wrapper">

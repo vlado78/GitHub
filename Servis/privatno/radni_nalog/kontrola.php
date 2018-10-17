@@ -4,9 +4,7 @@ if(trim($_POST["radionica"])===""){
     $greske["radionica"]="Obavezno odaberite radionicu";
   }
 
-  if(trim($_POST["zaposlenik"])===""){
-    $greske["zaposlenik"]="Obavezno odaberite zaposlenika";
-  }
+
 
   if(trim($_POST["vozilo"])===""){
     $greske["vozilo"]="Obavezno odaberite vozilo";

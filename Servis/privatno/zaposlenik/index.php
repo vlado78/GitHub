@@ -15,8 +15,8 @@ if(isset($_GET["uvjet"])){
 
 $izraz = $veza->prepare("
  
- select count(a.sifra) from zaposlenik a left join radionica b on a.radionica=b.sifra
-  where concat(ime, ' ', prezime,' ',b.naziv) 
+ select count(sifra) from zaposlenik 
+  where concat(ime, ' ', prezime) 
   like :uvjet ;
  ");
  $izraz->execute(array("uvjet"=>"%" . $uvjet . "%"));
@@ -84,12 +84,12 @@ if($stranica==0){
  select 
  a.sifra,a.ime,a.prezime,a.ulica_i_broj,a.mjesto,
  a.broj_mobitela,a.email,a.datum_rodjenja,a.datum_pocetka_rada,
- a.oib,a.broj_ugovora,b.naziv as radionica,a.radni_nalog,a.napomena
+ a.oib,a.broj_ugovora,b.naziv as radionica,a.napomena
   from zaposlenik a
   left join radionica b on a.radionica=b.sifra
   where concat(ime, ' ', prezime,' ',b.naziv) 
     like :uvjet
-   order by radionica  limit :stranica, 10 
+     limit :stranica, 10 
  
  
  ");
@@ -133,12 +133,13 @@ $izraz->bindValue("uvjet","%" . $uvjet . "%");
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
             </a> 
+            <!--
             <?php if($red->radni_nalog==null): ?>
 				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->ime,$red->prezime ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
 				    <i class="fas fa-trash fa-2x" style="color: red;"></i>
             </a> 
             <?php endif;?>
-           
+           -->
         </td>
       </tr>
       

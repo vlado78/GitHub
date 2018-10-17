@@ -36,7 +36,6 @@ datum_pocetka_rada datetime  ,
 oib varchar (11) ,
 broj_ugovora varchar(20) ,
 radionica int ,
-radni_nalog int,
 napomena varchar (200)
 
 );
@@ -44,7 +43,6 @@ napomena varchar (200)
 create table radni_nalog (
 sifra int primary key not null auto_increment,
 radionica int not null,
-zaposlenik int not null,
 vozilo int not null,
 kilometraza decimal (10,1),
 opis_kvara varchar (200),
@@ -53,6 +51,8 @@ datum_zavrsetka datetime,
 napomena varchar (200)
 
 );
+
+
 
 create table zaposlenik_radni_nalog (
 zaposlenik int not null,
@@ -94,6 +94,8 @@ alter table radni_nalog add foreign key (vozilo) references vozilo(sifra);
 
 alter table zaposlenik_radni_nalog add foreign key (zaposlenik) references zaposlenik(sifra);
 alter table zaposlenik_radni_nalog add foreign key (radni_nalog) references radni_nalog(sifra);
+
+
 
 alter table vozilo add foreign key (vlasnik) references vlasnik(sifra);
 
@@ -153,11 +155,15 @@ update zaposlenik set radionica=1 where sifra=1;
 update zaposlenik set radionica=2 where sifra=2;
 update zaposlenik set radionica=3 where sifra=3;
 
-insert into radni_nalog (sifra,radionica,zaposlenik,vozilo,kilometraza,opis_kvara,datum_pocetka) values
-(null,'1','4','1','205123','nešto lupa u prednjem trapu sa lijeve strane','2008-04-16'),
-(null,'1','5','4','141568','redovni servis na vozilu','2008-04-16'),
-(null,'2','6','7','125','update navigacije i pranje vozila','2008-04-16'),
-(null,'2','7','10','1','svijetli kontrolna lampica elektronike ABS-a','2008-04-16'),
-(null,'3','8','10','1','popraviti oštećenje laka na prednjem braniku','2008-04-16'),
-(null,'3','9','9','123','procijena popravka nakon udesa','2008-04-16');
+insert into radni_nalog (sifra,radionica,vozilo,kilometraza,opis_kvara,datum_pocetka) values
+(null,'1','1','205123','nešto lupa u prednjem trapu sa lijeve strane','2008-04-16'),
+(null,'1','4','141568','redovni servis na vozilu','2008-04-16'),
+(null,'2','7','125','update navigacije i pranje vozila','2008-04-16'),
+(null,'2','10','1','svijetli kontrolna lampica elektronike ABS-a','2008-04-16'),
+(null,'3','10','1','popraviti oštećenje laka na prednjem braniku','2008-04-16'),
+(null,'3','9','123','procijena popravka nakon udesa','2008-04-16');
+
+
+insert into zaposlenik_radni_nalog(zaposlenik,radni_nalog) values (1,1),
+(4,2),(2,3),(6,4),(8,5);
 

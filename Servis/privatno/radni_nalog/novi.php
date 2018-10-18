@@ -56,6 +56,7 @@ if(isset($_POST["dodaj"])){
 <html class="no-js" lang="en" dir="ltr">
   <head>
     <?php include_once "../../predlozak/head.php" ?>
+
   </head>
   <body>
    <div class="grid-container">
@@ -127,74 +128,68 @@ if(isset($_POST["dodaj"])){
 
       </div>
 
+    <div class="floated-label-wrapper">
+      <?php if(!isset($greske["vozilo"])): ?>
 
-
-
-
-  
-
-  
-  <div class="floated-label-wrapper">
-    <?php if(!isset($greske["vozilo"])): ?>
-
-        <label for="vozilo">Vozilo</label>
-              <select id="vozilo" name="vozilo">
-                <option value="">Odaberi vozilo</option>
+          <label for="vozilo">Vozilo</label>
+                <select id="vozilo" name="vozilo">
+                  <option value="">Odaberi vozilo</option>
+                  <?php 
+                  
+                  $izraz = $veza->prepare("
+                  select sifra,concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
+                          ");
+                  $izraz->execute();
+                  $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                  foreach($rezultati as $red):?>
+                <option 
                 <?php 
-                
-                $izraz = $veza->prepare("
-                select sifra,concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
-                        ");
-                $izraz->execute();
-                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
-                foreach($rezultati as $red):?>
-              <option 
-              <?php 
-              if(isset($_POST["vozilo"]) && $_POST["vozilo"]==$red->sifra){
-                echo ' selected="selected" ';
-              }
-              ?>
-              value="<?php echo $red->sifra ?>"><?php echo $red->vozilo ?></option>  
-              <?php endforeach;?>
-
-              </select>
-
-    <?php else:?>
-
-            <label class="is-invalid-label">
-                Zahtjevani unos
-                <select  class="is-invalid-input" style="color: #cc4b37; font-weight: bold" aria-describedby="nazivGreska" data-invalid=""
-                          id="vozilo" name="vozilo"
-                        aria-invalid="true">
-                    <option value="">Odaberi vozilo</option>
-                    <?php
-
-                    $izraz = $veza->prepare("
-                    select sifra,concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
-                                    ");
-                    $izraz->execute();
-                    $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
-                    foreach($rezultati as $red):?>
-                        <option
-                            <?php
-                            if(isset($_POST["vozilo"]) && $_POST["vozilo"]==$red->sifra){
-                                echo ' selected="selected" ';
-                            }
-                            ?>
-                                 value="<?php echo $red->sifra ?>"><?php echo $red->vozilo ?>
-                                 </option>  
-                                  
-                    <?php endforeach;?>
+                if(isset($_POST["vozilo"]) && $_POST["vozilo"]==$red->sifra){
+                  echo ' selected="selected" ';
+                }
+                ?>
+                value="<?php echo $red->sifra ?>"><?php echo $red->vozilo ?></option>  
+                <?php endforeach;?>
 
                 </select>
 
-                <span class="form-error is-visible" id="nazivGreska">
-                <?php echo $greske["vozilo"]; ?>
-                </span>
-            </label>
-    <?php endif;?>
+      <?php else:?>
 
-      </div> 
+              <label class="is-invalid-label">
+                  Zahtjevani unos
+                  <select  class="is-invalid-input" style="color: #cc4b37; font-weight: bold" aria-describedby="nazivGreska" data-invalid=""
+                            id="vozilo" name="vozilo"
+                          aria-invalid="true">
+                      <option value="">Odaberi vozilo</option>
+                      <?php
+
+                      $izraz = $veza->prepare("
+                      select sifra,concat(registarska_oznaka,'  ',marka_vozila,'  ',oznaka_modela,'  ',broj_sasije) as vozilo from vozilo
+                                      ");
+                      $izraz->execute();
+                      $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                      foreach($rezultati as $red):?>
+                          <option
+                              <?php
+                              if(isset($_POST["vozilo"]) && $_POST["vozilo"]==$red->sifra){
+                                  echo ' selected="selected" ';
+                              }
+                              ?>
+                                    value="<?php echo $red->sifra ?>"><?php echo $red->vozilo ?>
+                                    </option>  
+                                    
+                      <?php endforeach;?>
+
+                  </select>
+
+                  <span class="form-error is-visible" id="nazivGreska">
+                  <?php echo $greske["vozilo"]; ?>
+                  </span>
+              </label>
+      <?php endif;?>
+
+        </div> 
+      
     
 
       <div class="floated-label-wrapper">
@@ -236,6 +231,8 @@ if(isset($_POST["dodaj"])){
     </form>
    <?php include_once "../../predlozak/podnozje.php" ?>
    <?php include_once "../../predlozak/skripte.php" ?>
+   
+
  </body>
   
 

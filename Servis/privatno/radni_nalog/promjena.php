@@ -61,12 +61,23 @@ if(isset($_POST["promjeni"])){
   ////$o=$izraz->fetch(PDO::FETCH_OBJ);////////////
   $_POST=$izraz->fetch(PDO::FETCH_ASSOC);
 }
+if(strlen($_POST["datum_pocetka"])>0){
+  $_POST["datum_pocetka"] = date("Y-m-d",strtotime($_POST["datum_pocetka"]));
+
+}
+if(strlen($_POST["datum_zavrsetka"])>0){
+  $_POST["datum_zavrsetka"] = date("Y-m-d",strtotime($_POST["datum_zavrsetka"]));
+
+}
+
 ?>
 
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
   <head>
     <?php include_once "../../predlozak/head.php" ?>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   </head>
   <body>
   <div class="grid-container">
@@ -74,10 +85,11 @@ if(isset($_POST["promjeni"])){
   <?php include_once "../../predlozak/zaglavlje.php" ?>
   <?php include_once "../../predlozak/navbar.php" ?>
   <h3>Promijeni radni nalog</h3>
+  
   <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
   
   <div class="grid-x">  
-  <div class="cell large-4">
+  <div class="cell large-3">
   <div class="floated-label-wrapper">
             <label for="radionica">Radionica</label>
             <select id="radionica" name="radionica">
@@ -107,8 +119,11 @@ if(isset($_POST["promjeni"])){
             </select>
         </div>
         </div>
-        <div class="cell large-4"></div>
-        <div class="cell large-4">
+
+        <div class="cell large-1"></div>
+
+       
+        <div class="cell large-3">
         <div class="floated-label-wrapper">
             <label for="vozilo">Vozilo</label>
             <select id="vozilo" name="vozilo">
@@ -127,7 +142,7 @@ if(isset($_POST["promjeni"])){
 
                     <option
                         <?php
-                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                        if(isset($_POST["vozilo"]) && $_POST["vozilo"]==$red->sifra){
                             echo ' selected="selected" ';
                         }
                         ?>
@@ -136,13 +151,31 @@ if(isset($_POST["promjeni"])){
             </select>
         </div>
     </div>
+
+    <div class="cell large-1"></div>
+
+    <div class="cell large-3">
+    <div class="floated-label-wrapper">
+      <label for="kilometraza">Kilometraža</label>
+      <input value="<?php echo $_POST["kilometraza"] ?>" autocomplete="off" type="number" id="kilometraza" name="kilometraza" placeholder="Kilometraža" >
+    </div>
+    </div>
    </div>
+
  <hr />
 
 
  <div class="grid-x">
-     <div class="cell large-6">
-      <input autocomplete="off" type="text" id="uvjet" placeholder="Unesio dio imena ili zaposlenika" />
+ <div class="cell large-3">
+ <div class="floated-label-wrapper">
+      <label for="zaposlenik">Zaposlenik/ici na radnom nalogu</label>
+      </div>
+     </div>
+     <div class="cell large-5">
+      
+     </div>
+     <div class="cell large-3">
+      <input autocomplete="off" type="text" id="uvjet" placeholder="Dodaj zaposlenika na nalog " />
      </div>
      
 
@@ -196,21 +229,18 @@ $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
     </div>
     
     <div class="grid-x">
-    <div class="cell large-4">
-    <div class="floated-label-wrapper">
-      <label for="kilometraza">Kilometraža</label>
-      <input value="<?php echo $_POST["kilometraza"] ?>" autocomplete="off" type="number" id="kilometraza" name="kilometraza" placeholder="Kilometraža" >
-    </div>
-    </div>
+    
 
-    <div class="cell large-4">
+    <div class="cell large-3">
     <div class="floated-label-wrapper">
       <label for="datum_pocetka">Datum početka</label>
       <input value="<?php  echo  $_POST["datum_pocetka"] ?>" autocomplete="off" type="date" id="datum_pocetka" name="datum_pocetka" placeholder="Datum početka" >
     </div>
    </div>
 
-    <div class="cell large-4">
+   <div class="cell large-1"></div>
+
+    <div class="cell large-3">
     <div class="floated-label-wrapper">
           <label for="datum_zavrsetka">Datum završetka</label>
       <input value="<?php echo   $_POST["datum_zavrsetka"] ?>" autocomplete="off" type="date" id="datum_zavrsetka" name="datum_zavrsetka" placeholder="Datum završetka" >
@@ -243,7 +273,7 @@ $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
     
   </form>
   
-    
+  
 
   <?php include_once "../../predlozak/podnozje.php" ?>
   <?php include_once "../../predlozak/skripte.php" ?>
@@ -251,8 +281,8 @@ $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
   <script>
 
    $("#uvjet").autocomplete({
-          source:"traziZaposlenika.php?sifraRadnogNaloga=<?php echo $_GET["sifra"] ?>",
-          minLength: 2,
+          source:"traziZaposlenika.php?sifraRadnogNaloga=<?php echo $_GET["sifra"]?> ",
+          minLength: 1,
     		focus: function(event,ui){
     			event.preventDefault();
     		},
@@ -261,7 +291,10 @@ $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
           if(ui.item.sifra==0){
             $("#ime").val($("#uvjet").val());
             $("#uvjet").val("");
-           
+            
+            setTimeout(() => {
+              $("#ime").focus();
+            }, 100);
            
           }else{
             spremi(ui.item);
@@ -274,13 +307,12 @@ $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
       }
 
 
-
-      function spremi(zaposlenik){
+  function spremi(zaposlenik){
     
     $.ajax({
       type: "POST",
       url: "dodajZaposlenika.php",
-      data: "grupa=<?php echo $_GET["sifra"] ?>&zaposlenik="+zaposlenik.sifra,
+      data: "radni_nalog=<?php echo $_GET["sifra"] ?>&zaposlenik="+zaposlenik.sifra,
       success: function(vratioServer){
         //console.log(vratioServer);
         if (vratioServer==="OK"){
@@ -289,11 +321,11 @@ $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
             $("#podaci").append("<tr>" + 
             "<td>" + zaposlenik.ime + "</td>" + 
             "<td>" + zaposlenik.prezime + "</td>" + 
-            
+           
             "<td><i id=\"s_" + zaposlenik.sifra + "\" class=\"fas fa-trash fa-2x brisi\" style=\"color: red;\"></i></td>" + 
             + "</tr>");
             definirajBrisanje();
-           
+            
             $("#ime").val("");
             $("#prezime").val("");
             $("#uvjet").focus();

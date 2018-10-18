@@ -87,8 +87,9 @@ if($stranica==0){
  a.oib,a.broj_ugovora,b.naziv as radionica,a.napomena
   from zaposlenik a
   left join radionica b on a.radionica=b.sifra
-  where concat(ime, ' ', prezime,' ',b.naziv) 
+  where concat(ime, ' ', prezime)
     like :uvjet
+    order by radionica DESC
      limit :stranica, 10 
  
  

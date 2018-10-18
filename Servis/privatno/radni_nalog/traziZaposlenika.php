@@ -22,15 +22,13 @@ $izraz = $veza->prepare("
  $izraz->execute(array(
         "uvjet" => "%" . $_GET["term"] . "%",
         "radni_nalog" => $_GET["sifraRadnogNaloga"]
+       
+
+
+
     ));
  $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
  
- $p = new stdClass();
- $p->sifra=0;
- $p->ime="Novi";
- $p->prezime="Polaznik";
 
- 
- $rezultati[]=$p;
 
  echo json_encode($rezultati);

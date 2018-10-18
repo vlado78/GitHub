@@ -66,7 +66,7 @@ if(isset($_POST["promjeni"])){
             
             <select id="nadredjeni" name="nadredjeni">
 
-
+                    <option value="">Odaberi nadređenog</option>
                 <?php
               $sifra = $_GET["sifra"];
               $izraz = $veza->prepare("
@@ -88,7 +88,9 @@ if(isset($_POST["promjeni"])){
                echo ' selected';
              }
              ?>
-             value="<?php echo $red->sifra ?>"><?php echo $red->nadredjeni ?></option>
+             value="<?php echo $red->sifra ?>">
+             
+             <?php echo $red->nadredjeni ?></option>
             <?php endforeach;?>
 
 

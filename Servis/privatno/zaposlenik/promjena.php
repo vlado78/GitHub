@@ -180,7 +180,7 @@ else{
          <div class="floated-label-wrapper">
             <label for="radionica">Radionica</label>
             <select id="radionica" name="radionica">
-                <option value="">Odaberi radionicu</option>
+                <option value="<?php echo $red->sifra ?>"
                 <?php
 
                 $izraz = $veza->prepare("

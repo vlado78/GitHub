@@ -92,8 +92,10 @@ if($stranica==0){
  left join radionica b on a.radionica=b.sifra 
  
  left join vozilo d on a.vozilo=d.sifra
- left join vlasnik e on a.vozilo=e.sifra
+ left join vlasnik e on d.vlasnik=e.sifra
  where concat(a.sifra,' ',b.naziv ) like :uvjet
+ 
+ order by a.datum_pocetka DESC
     limit :stranica, 6
 
  ");

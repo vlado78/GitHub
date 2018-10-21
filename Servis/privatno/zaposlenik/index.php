@@ -87,7 +87,7 @@ if($stranica==0){
  a.oib,a.broj_ugovora,b.naziv as radionica,a.napomena
   from zaposlenik a
   left join radionica b on a.radionica=b.sifra
-  where concat(ime, ' ', prezime)
+  where concat(ime, ' ', prezime,' ',b.naziv)
     like :uvjet
     order by radionica DESC
      limit :stranica, 10 
@@ -134,13 +134,13 @@ $izraz->bindValue("uvjet","%" . $uvjet . "%");
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
             </a> 
-            <!--
-            <?php if($red->radni_nalog==null): ?>
+            
+            <?php if($red->radionica==null): ?>
 				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->ime,$red->prezime ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
 				    <i class="fas fa-trash fa-2x" style="color: red;"></i>
             </a> 
             <?php endif;?>
-           -->
+           
         </td>
       </tr>
       

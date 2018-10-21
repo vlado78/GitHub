@@ -149,6 +149,76 @@ if(isset($_POST["dodaj"])){
         </div>
 
 
+
+        <div class="floated-label-wrapper">
+        <?php if(!isset($greske["radionica"])): ?>
+
+            <label for="radionica">Radionica</label>
+            <select id="radionica" name="radionica">
+                <option value="">Odaberi radionicu</option>
+                <?php
+
+                $izraz = $veza->prepare("
+              
+              select sifra, naziv
+              from radionica
+              
+
+
+              ");
+                $izraz->execute();
+                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                foreach($rezultati as $red):?>
+
+                    <option
+                        <?php
+                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                            echo ' selected="selected" ';
+                        }
+                        ?>
+                            value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>
+                <?php endforeach;?>
+            </select>
+
+         <?php else:?>
+
+        <label class="is-invalid-label">
+              Zahtjevani unos
+              <select  class="is-invalid-input" style="color: #cc4b37; font-weight: bold" aria-describedby="nazivGreska" data-invalid=""
+                        id="vlasnik" name="radionica"
+                      aria-invalid="true">
+                  <option value="">Odaberi radionicu</option>
+                  <?php
+                  $izraz = $veza->prepare("
+              
+                  select sifra, naziv
+                  from radionica
+              ");
+                  $izraz->execute();
+                  $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
+                  foreach($rezultati as $red):?>
+                      <option
+                          <?php
+                          if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
+                              echo ' selected="selected" ';
+                          }
+                          ?>
+                              value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>
+                  <?php endforeach;?>
+
+              </select>
+
+              <span class="form-error is-visible" id="nazivGreska">
+              <?php echo $greske["radionica"]; ?>
+              </span>
+          </label>
+          <?php endif;?>
+          </div>
+
+
+        
+
+
         <div class="floated-label-wrapper">
             <label for="ulica_i_broj">Ulica i broj</label>
             <input  autocomplete="off" type="text" id="ulica_i_broj" name="ulica_i_broj" placeholder="Ulica i broj" value="<?php echo isset($_POST["ulica_i_broj"]) ? $_POST["ulica_i_broj"] : "" ?>">
@@ -192,34 +262,7 @@ if(isset($_POST["dodaj"])){
             <input   autocomplete="off" type="text" id="broj_ugovora" name="broj_ugovora" placeholder="Broj ugovora"  value="<?php echo isset($_POST["broj_ugovora"]) ?  $_POST["broj_ugovora"]: ""; ?>">
         </div>
 
-        <div class="floated-label-wrapper">
-            <label for="radionica">Radionica</label>
-            <select id="radionica" name="radionica">
-                <option value="">Odaberi radionicu</option>
-                <?php
-
-                $izraz = $veza->prepare("
-              
-              select sifra, naziv
-              from radionica
-              
-
-
-              ");
-                $izraz->execute();
-                $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
-                foreach($rezultati as $red):?>
-
-                    <option
-                        <?php
-                        if(isset($_POST["radionica"]) && $_POST["radionica"]==$red->sifra){
-                            echo ' selected="selected" ';
-                        }
-                        ?>
-                            value="<?php echo $red->sifra ?>"><?php echo $red->naziv ?></option>
-                <?php endforeach;?>
-            </select>
-        </div>
+        
 
        
 

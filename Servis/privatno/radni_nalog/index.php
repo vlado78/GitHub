@@ -93,7 +93,7 @@ if($stranica==0){
  
  left join vozilo d on a.vozilo=d.sifra
  left join vlasnik e on d.vlasnik=e.sifra
- where concat(a.sifra,' ',b.naziv ) like :uvjet
+ where concat(a.sifra,' ',b.naziv,' ', d.registarska_oznaka) like :uvjet
  
  order by a.datum_pocetka DESC
     limit :stranica, 6

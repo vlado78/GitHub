@@ -10,8 +10,11 @@ create database autoservis default character set utf8;
 
 use autoservis;
 
-
-
+create table korisnici(
+sifra int not null primary key auto_increment,
+korisnik varchar(50) not null,
+lozinka varchar(255) not null
+);
 
 
 

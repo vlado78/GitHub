@@ -204,7 +204,7 @@ if(isset($_POST["dodaj"])){
 
       <div class="floated-label-wrapper">
         <label for="datum_pocetka">Datum početka</label>
-        <input  autocomplete="off"  type="date" id="datum_pocetka" name="datum_pocetka" placeholder="Datum početka" value="<?php echo isset($_POST["datum_pocetka"]) ? $_POST["datum_pocetka"] : "" ?>"> 
+        <input  autocomplete="off"  type="date" id="danas" name="datum_pocetka" placeholder="Datum početka" value="<?php echo isset($_POST["datum_pocetka"]) ? $_POST["datum_pocetka"] : "" ?>"> 
       </div>
 
            
@@ -231,6 +231,10 @@ if(isset($_POST["dodaj"])){
     </form>
    <?php include_once "../../predlozak/podnozje.php" ?>
    <?php include_once "../../predlozak/skripte.php" ?>
+   <script>
+   let danas = new Date().toISOString().substr(0, 10);
+document.querySelector("#danas").value = danas;
+   </script>
    
 
  </body>

@@ -102,7 +102,12 @@ if(isset($_POST["dodaj"])){
       <label for="vlasnika">Vlasnik</label>
             <select id="vlasnik" name="vlasnik">
               <option value="">Odaberi vlasnika</option>
+              
+              
               <?php 
+             
+              
+              
               
               $izraz = $veza->prepare("
               

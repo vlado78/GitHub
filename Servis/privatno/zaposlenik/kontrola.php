@@ -19,3 +19,7 @@ if(strlen($_POST["prezime"])>50){
   $greske["prezime"]="Prezime smije imati maksimalno 50 znakovam vi, ste stavili " . strlen($_POST["prezime"]) . " znakova";
 }
 
+if(trim($_POST["radionica"])===""){
+  $greske["radionica"]="Obavezno izabrati radionicu ";
+}
+

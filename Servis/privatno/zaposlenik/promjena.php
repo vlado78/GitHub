@@ -33,7 +33,7 @@ if(isset($_POST["promijeni"])){
               where sifra=:sifra;
               ");
 
-  print_r( $izraz);
+  
 
               $izraz->bindParam(":sifra",$_POST["sifra"]);
 

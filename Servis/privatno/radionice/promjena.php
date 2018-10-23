@@ -124,12 +124,12 @@ if(isset($_POST["promjeni"])){
         <div class="grid-x">
             <div class="cell large-1"></div>
             <div class="cell large-4">
-              <a href="index.php" class="alert button expanded">Nazad</a>
+              <a href="index.php" class="alert button expanded rounded">Nazad</a>
             </div>
             <div class="cell large-2"></div>
             <div class="cell large-4">
             <input type="hidden" name="sifra" value="<?php echo $_POST["sifra"] ?>">
-            <input class="button expanded" type="submit" name="promjeni" value="Promjeni">
+            <input class="button expanded rounded" type="submit" name="promjeni" value="Promjeni">
             </div>
           </div>       
 

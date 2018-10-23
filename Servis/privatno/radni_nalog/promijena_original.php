@@ -143,7 +143,9 @@ zaposlenik
             <div class="cell large-4">
               <a href="index.php" class="alert button expanded">Nazad</a>
             </div>
-            <div class="cell large-2"></div>
+            <div class="cell large-2">
+            <a target="_blank" href="exportPDF.php">PDF</a>
+            </div>
             <div class="cell large-4">
             <input class="button expanded" type="submit" name="promjeni" value="Promjeni">
             </div>

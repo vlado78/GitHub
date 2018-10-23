@@ -145,6 +145,7 @@ if($stranica==0){
       <td data-label="Datum kraja"><?php echo ($red->datum_zavrsetka!=null) ? date("d.m.Y.",strtotime($red->datum_zavrsetka)) : "Nije definirano "; ?></td>
       <td data-label="Napomena"><?php echo ($red->napomena !=null) ? ($red->napomena) :  "Nije definirano "       ; ?></td>
       <td data-label="Akcija">
+            <a target="_blank" href="exportPDF.php?sifra=<?php echo $red->sifra; ?>"><i class="far fa-2x fa-file-pdf"></i></a>
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
             </a> 

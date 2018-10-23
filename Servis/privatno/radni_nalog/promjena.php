@@ -85,6 +85,7 @@ if(strlen($_POST["datum_zavrsetka"])>0){
   <?php include_once "../../predlozak/zaglavlje.php" ?>
   <?php include_once "../../predlozak/navbar.php" ?>
   <h3>Promijeni radni nalog</h3>
+ 
   
   <form class="callout text-center" action="<?php echo $_SERVER["PHP_SELF"] ?>" method="post">
   
@@ -123,8 +124,7 @@ if(strlen($_POST["datum_zavrsetka"])>0){
         <div class="cell large-1"></div>
 
        
-        <div class="cell large-3">
-        <div class="floated-label-wrapper">
+       <div class="floated-label-wrapper">
             <label for="vozilo">Vozilo</label>
             <select id="vozilo" name="vozilo">
                 <option value="">Odaberi vozilo</option>
@@ -134,7 +134,9 @@ if(strlen($_POST["datum_zavrsetka"])>0){
               
               select *
               from vozilo
-           
+              
+
+
               ");
                 $izraz->execute();
                 $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
@@ -142,14 +144,14 @@ if(strlen($_POST["datum_zavrsetka"])>0){
 
                     <option
                         <?php
-                        if(isset($_POST["vozilo"]) && $_POST["vozilo"]==$red->sifra){
-                            echo ' selected="selected" ';
+                      if(isset( $_POST["vozilo"]) && $_POST["vozilo"]==$red->sifra){
+                        echo ' selected="selected" ';
                         }
                         ?>
                             value="<?php echo $red->sifra ?>"><?php echo $red->registarska_oznaka,' ',$red->marka_vozila,' ', $red->oznaka_modela?></option>
                 <?php endforeach;?>
             </select>
-        </div>
+        
     </div>
 
     <div class="cell large-1"></div>
@@ -260,13 +262,16 @@ $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
  <div class="grid-x">
             <div class="cell large-1"></div>
             <div class="cell large-4">
-              <a href="index.php" class="alert button expanded">Nazad</a>
+              <a href="index.php" class="alert button expanded rounded">Nazad</a>
             </div>
-            <div class="cell large-2"></div>
+            <div class="cell large-2">
+                  
+
+            </div>
             <div class="cell large-4">
             <input type="hidden" name="sifra" value="<?php echo  $_POST["sifra"] ?>" />
 
-            <input class="button expanded" type="submit" name="promjeni" value="Promjeni">
+            <input class="button expanded rounded" type="submit" name="promjeni" value="Promjeni">
             </div>
           </div>    
 
@@ -303,7 +308,7 @@ $rezultati = $izraz->fetchAll(PDO::FETCH_OBJ);
     		}
       }).data("ui-autocomplete")._renderItem=function(ul,objekt){
         return $("<li>").append("<a>"
-         + objekt.ime + " " + objekt.prezime + "</a>").appendTo(ul);
+         + objekt.ime + " " + objekt.prezime + " " +objekt.radionica + "</a>").appendTo(ul);
       }
 
 

@@ -11,13 +11,13 @@ if(!isset($_GET["term"])){
 
 $izraz = $veza->prepare("
  
- select sifra, ime, prezime
- from zaposlenik 
- where concat(ime, ' ', prezime) like :uvjet
+ select a.sifra, a.ime, a.prezime,b.naziv as radionica
+ from zaposlenik a left join radionica b on a.radionica=b.sifra
+ where concat(a.ime, ' ', a.prezime,' ',b.naziv) like :uvjet
 
- and sifra not in (select zaposlenik from zaposlenik_radni_nalog 
- where radni_nalog=:radni_nalog)
- order by prezime, ime limit 10
+ and a.sifra not in 
+ (select zaposlenik from zaposlenik_radni_nalog where radni_nalog=:radni_nalog)
+ order by a.prezime, a.ime limit 10
  ");
  $izraz->execute(array(
         "uvjet" => "%" . $_GET["term"] . "%",

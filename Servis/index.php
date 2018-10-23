@@ -12,7 +12,7 @@
   <?php include_once "predlozak/zaglavlje.php" ?>
   <?php include_once "predlozak/navbar.php" ?>
 
-    ovo je naslovnica
+  
 
 <img src="img/ja_auto.jpg" alt="moja slika" class="center">
 

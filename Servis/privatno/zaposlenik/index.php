@@ -49,11 +49,11 @@ if($stranica==0){
 <br>
 <div class="grid-x">
            
-  <div class="cell large-3">
+  <div class="cell large-4">
     <h3>Zaposlenici</h3>
   </div>
 
-  <div class="cell large-2"></div>
+  
 
   <form action="<?php echo $_SERVER["PHP_SELF"] ?>">
   <div class="input-group input-group-rounded">
@@ -63,10 +63,15 @@ if($stranica==0){
   </div>
 </div>
 </form>
+<div class="cell large-1"></div>
 
+<div class="cell large-2">
+
+<a  class="far fa-2x fa-file-pdf target="_blank" href="exportPDF.php">Ispis</a>
+</div>
 
  
-<div class="cell large-2"></div>
+
   <div class="cell large-2  ">
     <a href="novi.php"  class="button expanded rounded">Dodaj novog zaposlenika</a>
   </div>
@@ -133,7 +138,9 @@ $izraz->bindValue("uvjet","%" . $uvjet . "%");
       <td data-label="Akcija">
             <a href="promjena.php?sifra=<?php echo $red->sifra; ?>">
             <i class="fas fa-edit fa-2x"></i> 
+
             </a> 
+            
             
             <?php if($red->radionica==null): ?>
 				    <a onclick="return confirm('Sigurno obrisati <?php echo $red->ime,$red->prezime ?>')" href="obrisi.php?sifra=<?php echo $red->sifra; ?>">
